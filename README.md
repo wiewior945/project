@@ -1,1 +1,1 @@
-# project
+# web and mobile applicantions to save and share notes from school
