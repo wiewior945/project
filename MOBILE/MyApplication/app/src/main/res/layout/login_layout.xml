@@ -7,30 +7,31 @@
         android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:textAllCaps="false"
-        android:text="Login"
+        android:text="Zaloguj"
         android:id="@+id/loginButton"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
         android:textSize="30dp"
-        android:onClick="login" />
+        android:onClick="login"
+        android:layout_below="@+id/passwordText"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:textAllCaps="false"
-        android:text="Register"
+        android:text="Zarejestruj"
         android:id="@+id/registerButton"
-        android:layout_alignParentBottom="true"
+        android:textSize="30dp"
+        android:onClick="register"
+        android:layout_below="@+id/passwordText"
         android:layout_toLeftOf="@+id/loginButton"
-        android:layout_toStartOf="@+id/loginButton"
-        android:textSize="30dp" />
+        android:layout_toStartOf="@+id/loginButton" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Login"
+        android:text="Użytkownik"
         android:id="@+id/textView"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -53,7 +54,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Password"
+        android:text="Hasło"
         android:id="@+id/textView2"
         android:textIsSelectable="false"
         android:textSize="35dp"
