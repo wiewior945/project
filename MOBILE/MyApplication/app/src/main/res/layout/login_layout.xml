@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:textAllCaps="false"
-        android:text="Zarejestruj"
+        android:text="Rejestracja"
         android:id="@+id/registerButton"
         android:textSize="30dp"
         android:onClick="register"

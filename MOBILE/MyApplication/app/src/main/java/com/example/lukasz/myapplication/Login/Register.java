@@ -1,68 +1,103 @@
 package com.example.lukasz.myapplication.Login;
 
 import android.app.Activity;
-import android.net.Uri;
+import android.app.AlertDialog;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
 
+import com.example.lukasz.myapplication.DataBase.DataBaseConnection;
 import com.example.lukasz.myapplication.R;
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
+
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Lukasz on 2016-04-04.
  */
 public class Register extends Activity {
 
-    private GoogleApiClient client;
+    private EditText loginText, passwordText1, passwordText2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register_layout);
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+        loginText=(EditText) findViewById(R.id.usernameText);
+        passwordText1=(EditText) findViewById(R.id.passwordText1);
+        passwordText2=(EditText) findViewById(R.id.passwordText2);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Register Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app deep link URI is correct.
-                Uri.parse("android-app://com.example.lukasz.myapplication.Login/http/host/path")
-        );
-       // AppIndex.AppIndexApi.start(client, viewAction);
     }
 
     @Override
     public void onStop() {
         super.onStop();
+    }
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Register Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app deep link URI is correct.
-                Uri.parse("android-app://com.example.lukasz.myapplication.Login/http/host/path")
-        );
-        AppIndex.AppIndexApi.end(client, viewAction);
-        client.disconnect();
+    /*
+        sprawdza czy nazwa utkownika nie jest pusta oraz czy nie jest zajęta, poźniej sprawdza czy hasło jest takie samo, jeśli tak
+        wysyła dane do bazy. Zwracany jest komunikat przy poprawnym zapisie danych i przy błędzie
+     */
+    public void register(View view){
+        String username = loginText.getText().toString();
+        if(username==null || username.equals("")){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Nie podano nazwy użytkowika");
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+        }
+        else{
+            try {
+                String checkUsername = new DataBaseConnection().execute("http://192.168.0.66:80/mobileApp/register/checkUsername.php","username", username).get();
+                if(!checkUsername.equals("")){  //jesli login jest zajety
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setMessage("Nazwa użytkownika jest już zajęta! Wybierz inną nazwę");
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                }
+                else{
+                    String password1 = passwordText1.getText().toString();
+                    String password2 = passwordText2.getText().toString();
+                    if(!password1.equals("")){
+                        if(!password1.equals(password2)){
+                            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                            builder.setMessage("Hasła nie są takie same!");
+                            AlertDialog alertDialog = builder.create();
+                            alertDialog.show();
+                        }
+                        else{
+                            new DataBaseConnection().execute("http://192.168.0.66:80/mobileApp/register/register.php", "username", username, "password", password1).get();
+                            String check = new DataBaseConnection().execute("http://192.168.0.66:80/mobileApp/register/checkUsername.php","username", username).get();
+                            System.out.println("Rekord:"+check);
+                            if(check.equals(username)){
+                                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                                builder.setMessage("Pomyślnie dodano użytkownika");
+                                AlertDialog alertDialog = builder.create();
+                                alertDialog.show();
+                            }
+                            else{
+                                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                                builder.setMessage("Wystąpił błąd. Spróbuj ponownie");
+                                AlertDialog alertDialog = builder.create();
+                                alertDialog.show();
+                            }
+                        }
+                    }
+                    else{
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                        builder.setMessage("Nie podano hasła");
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
+                    }
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
