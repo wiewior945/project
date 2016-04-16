@@ -1,16 +1,19 @@
-package com.example.lukasz.myapplication.Login;
+package com.example.lukasz.myapplication.login;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
-import com.example.lukasz.myapplication.DataBase.DataBaseConnection;
+import com.example.lukasz.myapplication.dataBase.DataBaseConnection;
 import com.example.lukasz.myapplication.R;
+import com.example.lukasz.myapplication.desktop.Desktop;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.concurrent.ExecutionException;
 
@@ -43,21 +46,49 @@ public class Login extends Activity {
     public void login(View view) {
         String login=loginText.getText().toString();
         try {
-            if(new DataBaseConnection().execute("http://192.168.0.66:80/mobileApp/login/username.php", "username", login).get().equals(login)){
+            if(!login.equals("")){
                 String password=passwordText.getText().toString();
-                if(new DataBaseConnection().execute("http://192.168.0.66:80/mobileApp/login/password.php", "password", password).get().equals(password)){
-                    //tutaj nowa activity
+                if(!password.equals("")){
+                    if(new DataBaseConnection().execute("mobileApp/login/username.php", "username", login).get().equals(login)){
+                        if(new DataBaseConnection().execute("mobileApp/login/password.php", "password", password).get().equals(password)){
+                            DataBaseConnection a=new DataBaseConnection();
+                            String b=a.execute("mobileApp/login/getUser.php", "username", login).get();
+                            JSONObject json = new JSONObject(b);
+                            JSONArray tablica=null;
+                            tablica=json.getJSONArray("records");
+                            for(int i=0;i<tablica.length();i++){
+                                JSONObject c=tablica.getJSONObject(i);
+                                String id=c.getString("id");
+                                String name=c.getString("username");
+                                System.out.println("@@@@@@@ "+name+" "+id);
+                            }
+                           // Intent intent = new Intent(this,Desktop.class);
+                           // startActivity(intent);
+                        }
+                        else{
+                            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                            builder.setMessage("Błędne hasło");
+                            AlertDialog alertDialog = builder.create();
+                            alertDialog.show();
+                        }
+                    }
+                    else{
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                        builder.setMessage("Taki użytkownik nie istnieje. Jeśli nie masz jeszcze konta załóż je klikając w przycisk rejestracja");
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
+                    }
                 }
                 else{
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage("Błędne hasło");
+                    builder.setMessage("Nie podano hasła");
                     AlertDialog alertDialog = builder.create();
                     alertDialog.show();
                 }
             }
             else{
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage("Błędna nazwa użytkownika");
+                builder.setMessage("Nie podano nazwy użytkownika");
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
             }
@@ -65,6 +96,8 @@ public class Login extends Activity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }

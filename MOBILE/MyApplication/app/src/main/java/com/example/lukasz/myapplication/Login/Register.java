@@ -1,12 +1,13 @@
-package com.example.lukasz.myapplication.Login;
+package com.example.lukasz.myapplication.login;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
-import com.example.lukasz.myapplication.DataBase.DataBaseConnection;
+import com.example.lukasz.myapplication.dataBase.DataBaseConnection;
 import com.example.lukasz.myapplication.R;
 
 import java.util.concurrent.ExecutionException;
@@ -51,7 +52,7 @@ public class Register extends Activity {
         }
         else{
             try {
-                String checkUsername = new DataBaseConnection().execute("http://192.168.0.66:80/mobileApp/register/checkUsername.php","username", username).get();
+                String checkUsername = new DataBaseConnection().execute("mobileApp/register/checkUsername.php","username", username).get();
                 if(!checkUsername.equals("")){  //jesli login jest zajety
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     builder.setMessage("Nazwa użytkownika jest już zajęta! Wybierz inną nazwę");
@@ -69,14 +70,21 @@ public class Register extends Activity {
                             alertDialog.show();
                         }
                         else{
-                            new DataBaseConnection().execute("http://192.168.0.66:80/mobileApp/register/register.php", "username", username, "password", password1).get();
-                            String check = new DataBaseConnection().execute("http://192.168.0.66:80/mobileApp/register/checkUsername.php","username", username).get();
+                            new DataBaseConnection().execute("mobileApp/register/register.php", "username", username, "password", password1).get();
+                            String check = new DataBaseConnection().execute("mobileApp/register/checkUsername.php","username", username).get();
                             System.out.println("Rekord:"+check);
                             if(check.equals(username)){
                                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                                 builder.setMessage("Pomyślnie dodano użytkownika");
+                                builder.setCancelable(false);
+                                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                        finish();
+                                }});
                                 AlertDialog alertDialog = builder.create();
                                 alertDialog.show();
+
                             }
                             else{
                                 AlertDialog.Builder builder = new AlertDialog.Builder(this);

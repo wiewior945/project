@@ -1,4 +1,4 @@
-package com.example.lukasz.myapplication.DataBase;
+package com.example.lukasz.myapplication.dataBase;
 
 import android.os.AsyncTask;
 
@@ -10,14 +10,18 @@ import java.io.InputStreamReader;
 import java.net.URLEncoder;
 
 /**
- * Created by Lukasz on 2016-04-01.
+ *  Odczyt i zapis danych do bazy. Przy odczycie podajemy tylko ścieżkę do pliku .php,
+ *  przy zapisie pierwszy parametr to ścieżka do pliku .php, później nazwa zmiennej i zmienna.
+ *  np.
+ *  ... new DatabaseConnection.execute("mobile/save.php", nazwa_zmiennej, zmienna, nazwa_zmiennej, zmienna itd...);
  */
 public class DataBaseConnection extends AsyncTask<String,Void,String> {
 
+    private String serverAdres = "http://192.168.0.66:80/";
 
     @Override
     protected String doInBackground(String... params) {
-        String link=params[0];
+        String link=serverAdres+params[0];
         String data="";
         try {
             for(int i=1;i<params.length;i++){
