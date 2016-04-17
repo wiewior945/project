@@ -94,15 +94,18 @@
         android:textSize="20dp" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:textAllCaps="false"
+        android:background="@drawable/rounded"
+        android:textColor="#ffffff"
         android:text="Zarejestruj"
         android:id="@+id/button"
         android:onClick="register"
         android:layout_below="@+id/passwordText2"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:textSize="30dp" />
+        android:textSize="30dp"
+        android:layout_margin="10dp" />
 
 </RelativeLayout>

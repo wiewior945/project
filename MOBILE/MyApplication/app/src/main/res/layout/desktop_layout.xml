@@ -9,39 +9,67 @@
         android:layout_width="match_parent"
         android:layout_height="58dp"
         android:background="#e2e2e2"
-        android:layout_weight="0.04">
+        android:layout_weight="0.03"
+        android:id="@+id/buttonLayout">
 
-        <Button
-            android:layout_width="wrap_content"
+
+        <ImageButton
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:text="Dodaj notatkę"
+            android:src="@drawable/add_note_icon"
+            android:background="@drawable/rounded"
             android:id="@+id/addNoteButton"
-            android:textSize="20dp"
-            android:background="#1256ff"
-            android:textColor="#ffffff"
-            android:textAllCaps="false"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:minWidth="150dp"
-            android:layout_marginRight="15dp"
-            android:onClick="newNote"/>
+            android:scaleType="fitCenter"
+            android:nestedScrollingEnabled="false"
+            android:layout_margin="5dp"
+            android:padding="5dp" />
 
-        <Spinner
-            android:layout_width="wrap_content"
+        <ImageButton
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:id="@+id/groupSpinner"
+            android:background="@drawable/rounded"
+            android:src="@drawable/menu_icon"
+            android:id="@+id/menuButton"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_toRightOf="@+id/addNoteButton"
-            android:layout_toEndOf="@+id/addNoteButton"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:background="#185aff"
+            android:scaleType="fitCenter"
+            android:layout_margin="5dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:background="#e2e2e2"
+        android:layout_weight="0.04"
+        android:id="@+id/groupLayout">
+
+        <Spinner
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/groupSpinner"
+            android:layout_centerVertical="true"
+            android:background="@drawable/rounded"
             android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp" />
+            android:layout_marginBottom="15dp"
+            android:layout_toRightOf="@+id/textGroup"
+            android:layout_marginRight="20dp"
+            android:paddingLeft="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Grupa:"
+            android:id="@+id/textGroup"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:textSize="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" />
     </RelativeLayout>
 </LinearLayout>

@@ -10,6 +10,7 @@ import android.widget.EditText;
 import com.example.lukasz.myapplication.dataBase.DataBaseConnection;
 import com.example.lukasz.myapplication.R;
 import com.example.lukasz.myapplication.desktop.Desktop;
+import com.example.lukasz.myapplication.user.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -56,14 +57,15 @@ public class Login extends Activity {
                             JSONObject json = new JSONObject(b);
                             JSONArray tablica=null;
                             tablica=json.getJSONArray("records");
-                            for(int i=0;i<tablica.length();i++){
-                                JSONObject c=tablica.getJSONObject(i);
-                                String id=c.getString("id");
-                                String name=c.getString("username");
-                                System.out.println("@@@@@@@ "+name+" "+id);
-                            }
-                           // Intent intent = new Intent(this,Desktop.class);
-                           // startActivity(intent);
+                            JSONObject c=tablica.getJSONObject(0);
+                            String jsonID=c.getString("id");
+                            int id = Integer.parseInt(jsonID);
+                            String name=c.getString("username");
+
+                            User user = new User(name,id);
+                            Intent intent = new Intent(this,Desktop.class);
+                            intent.putExtra("user",user);
+                            startActivity(intent);
                         }
                         else{
                             AlertDialog.Builder builder = new AlertDialog.Builder(this);

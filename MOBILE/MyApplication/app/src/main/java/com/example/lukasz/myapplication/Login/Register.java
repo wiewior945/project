@@ -72,7 +72,6 @@ public class Register extends Activity {
                         else{
                             new DataBaseConnection().execute("mobileApp/register/register.php", "username", username, "password", password1).get();
                             String check = new DataBaseConnection().execute("mobileApp/register/checkUsername.php","username", username).get();
-                            System.out.println("Rekord:"+check);
                             if(check.equals(username)){
                                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                                 builder.setMessage("Pomyślnie dodano użytkownika");
