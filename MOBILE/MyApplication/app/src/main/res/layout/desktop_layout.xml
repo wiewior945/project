@@ -14,11 +14,11 @@
 
 
         <ImageButton
+            android:id="@+id/addNoteButton"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:src="@drawable/add_note_icon"
             android:background="@drawable/rounded"
-            android:id="@+id/addNoteButton"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
@@ -28,11 +28,12 @@
             android:padding="5dp" />
 
         <ImageButton
+            android:id="@+id/menuButton"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded"
             android:src="@drawable/menu_icon"
-            android:id="@+id/menuButton"
+            android:onClick="menu"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"

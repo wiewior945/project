@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Czas generowania: 16 Kwi 2016, 18:29
+-- Czas generowania: 24 Kwi 2016, 18:04
 -- Wersja serwera: 10.1.10-MariaDB
 -- Wersja PHP: 5.6.19
 
@@ -23,21 +23,24 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `group`
+-- Struktura tabeli dla tabeli `groups`
 --
 
-CREATE TABLE `group` (
+CREATE TABLE `groups` (
   `id` int(11) NOT NULL,
-  `name` varchar(50) NOT NULL,
-  `adminID` int(11) NOT NULL
+  `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL,
+  `adminID` int(11) NOT NULL,
+  `isPublic` tinyint(1) NOT NULL,
+  `password` varchar(50) CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Zrzut danych tabeli `group`
+-- Zrzut danych tabeli `groups`
 --
 
-INSERT INTO `group` (`id`, `name`, `adminID`) VALUES
-(1, 'grupa', 1);
+INSERT INTO `groups` (`id`, `name`, `adminID`, `isPublic`, `password`) VALUES
+(2, 'pierwsza', 4, 1, ''),
+(3, 'druga', 4, 0, 'druga');
 
 -- --------------------------------------------------------
 
@@ -47,8 +50,8 @@ INSERT INTO `group` (`id`, `name`, `adminID`) VALUES
 
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
-  `Username` varchar(50) NOT NULL,
-  `Password` varchar(50) NOT NULL
+  `Username` varchar(50) CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL,
+  `Password` varchar(50) CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -56,7 +59,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `Username`, `Password`) VALUES
-(1, 'pierwszy', 'testowy');
+(1, 'pierwszy', 'testowy'),
+(4, 'q', 'q');
 
 -- --------------------------------------------------------
 
@@ -65,7 +69,7 @@ INSERT INTO `user` (`id`, `Username`, `Password`) VALUES
 --
 
 CREATE TABLE `usergroup` (
-  `UserID` int(11) NOT NULL,
+  `userID` int(11) NOT NULL,
   `groupID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -73,17 +77,18 @@ CREATE TABLE `usergroup` (
 -- Zrzut danych tabeli `usergroup`
 --
 
-INSERT INTO `usergroup` (`UserID`, `groupID`) VALUES
-(1, 1);
+INSERT INTO `usergroup` (`userID`, `groupID`) VALUES
+(4, 2),
+(4, 3);
 
 --
 -- Indeksy dla zrzutów tabel
 --
 
 --
--- Indexes for table `group`
+-- Indexes for table `groups`
 --
-ALTER TABLE `group`
+ALTER TABLE `groups`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -93,19 +98,37 @@ ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `usergroup`
+--
+ALTER TABLE `usergroup`
+  ADD KEY `groupID` (`groupID`),
+  ADD KEY `userID` (`userID`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT dla tabeli `group`
+-- AUTO_INCREMENT dla tabeli `groups`
 --
-ALTER TABLE `group`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `groups`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT dla tabeli `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- Ograniczenia dla zrzutów tabel
+--
+
+--
+-- Ograniczenia dla tabeli `usergroup`
+--
+ALTER TABLE `usergroup`
+  ADD CONSTRAINT `groupsCascade` FOREIGN KEY (`groupID`) REFERENCES `groups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `userCascade` FOREIGN KEY (`userID`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

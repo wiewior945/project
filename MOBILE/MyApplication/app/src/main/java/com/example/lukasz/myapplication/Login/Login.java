@@ -30,7 +30,7 @@ public class Login extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_layout);
         loginText = (EditText) findViewById(R.id.loginText);
-        passwordText=(EditText) findViewById(R.id.passwordText);
+        passwordText=(EditText) findViewById(R.id.passwordTextView);
     }
 
     @Override
