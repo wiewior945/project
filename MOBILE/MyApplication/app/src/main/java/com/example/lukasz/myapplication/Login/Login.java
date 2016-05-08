@@ -20,6 +20,7 @@ import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Lukasz on 2016-03-23.
+ * Sprawdza dane logowania i jeśli są poprawne tworzy obiekt user, który jest przekazywany do następnego ekranu (desktop)
  */
 public class Login extends Activity {
 
@@ -61,8 +62,10 @@ public class Login extends Activity {
                             String jsonID=c.getString("id");
                             int id = Integer.parseInt(jsonID);
                             String name=c.getString("username");
+                            String jsonGroupId=c.getString("privateGroup");
+                            int privateGroupId=Integer.parseInt(jsonGroupId);
 
-                            User user = new User(name,id);
+                            User user = new User(name,id, privateGroupId);
                             Intent intent = new Intent(this,Desktop.class);
                             intent.putExtra("user",user);
                             startActivity(intent);

@@ -8,11 +8,12 @@ import java.io.Serializable;
 public class User implements Serializable{
 
     private String username;
-    private int id;
+    private int id, privateGroupId;
 
-    public User(String username, int id){
+    public User(String username, int id, int privateGroupId){
         this.username=username;
         this.id=id;
+        this.privateGroupId=privateGroupId;
     }
 
     public void setUsername(String username){
@@ -29,6 +30,14 @@ public class User implements Serializable{
 
     public int getId(){
         return  id;
+    }
+
+    public void setPrivateGroupId(int id){
+        privateGroupId=id;
+    }
+
+    public int getPrivateGroupId(){
+        return privateGroupId;
     }
 
 }

@@ -48,17 +48,22 @@
         android:layout_weight="0.04"
         android:id="@+id/groupLayout">
 
-        <Spinner
+        <Button
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:id="@+id/groupSpinner"
+            android:id="@+id/groupButton"
             android:layout_centerVertical="true"
             android:background="@drawable/rounded"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
             android:layout_toRightOf="@+id/textGroup"
             android:layout_marginRight="20dp"
-            android:paddingLeft="5dp" />
+            android:paddingLeft="5dp"
+            android:textColor="#ffffff"
+            android:textAllCaps="false"
+            android:textSize="20dp"
+            android:text="Własne notatki"
+            android:onClick="groups" />
 
         <TextView
             android:layout_width="wrap_content"

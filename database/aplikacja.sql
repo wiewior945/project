@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Czas generowania: 24 Kwi 2016, 18:04
+-- Czas generowania: 08 Maj 2016, 20:32
 -- Wersja serwera: 10.1.10-MariaDB
 -- Wersja PHP: 5.6.19
 
@@ -39,8 +39,7 @@ CREATE TABLE `groups` (
 --
 
 INSERT INTO `groups` (`id`, `name`, `adminID`, `isPublic`, `password`) VALUES
-(2, 'pierwsza', 4, 1, ''),
-(3, 'druga', 4, 0, 'druga');
+(8, 'Prywatne notatki', 9, 0, '');
 
 -- --------------------------------------------------------
 
@@ -51,16 +50,16 @@ INSERT INTO `groups` (`id`, `name`, `adminID`, `isPublic`, `password`) VALUES
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `Username` varchar(50) CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL,
-  `Password` varchar(50) CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL
+  `Password` varchar(50) CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL,
+  `privateGroup` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Zrzut danych tabeli `user`
 --
 
-INSERT INTO `user` (`id`, `Username`, `Password`) VALUES
-(1, 'pierwszy', 'testowy'),
-(4, 'q', 'q');
+INSERT INTO `user` (`id`, `Username`, `Password`, `privateGroup`) VALUES
+(9, 'q', 'q', 8);
 
 -- --------------------------------------------------------
 
@@ -78,8 +77,7 @@ CREATE TABLE `usergroup` (
 --
 
 INSERT INTO `usergroup` (`userID`, `groupID`) VALUES
-(4, 2),
-(4, 3);
+(9, 8);
 
 --
 -- Indeksy dla zrzutów tabel
@@ -112,12 +110,12 @@ ALTER TABLE `usergroup`
 -- AUTO_INCREMENT dla tabeli `groups`
 --
 ALTER TABLE `groups`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT dla tabeli `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- Ograniczenia dla zrzutów tabel
 --

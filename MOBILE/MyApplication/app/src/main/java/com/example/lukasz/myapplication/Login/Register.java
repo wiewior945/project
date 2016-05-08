@@ -39,8 +39,7 @@ public class Register extends Activity {
     }
 
     /*
-        sprawdza czy nazwa utkownika nie jest pusta oraz czy nie jest zajęta, poźniej sprawdza czy hasło jest takie samo, jeśli tak
-        wysyła dane do bazy. Zwracany jest komunikat przy poprawnym zapisie danych i przy błędzie
+        Dodaje użytkownika do bazy danych, tworzy jego prywatną grupę i dodaje rekord w tabeli usergroup
      */
     public void register(View view){
         String username = loginText.getText().toString();
@@ -69,10 +68,14 @@ public class Register extends Activity {
                             AlertDialog alertDialog = builder.create();
                             alertDialog.show();
                         }
-                        else{
+                        else{   //tutaj dodaje użytkownika i jego grupę
                             new DataBaseConnection().execute("mobileApp/register/register.php", "username", username, "password", password1).get();
-                            String check = new DataBaseConnection().execute("mobileApp/register/checkUsername.php","username", username).get();
-                            if(check.equals(username)){
+                            String id = new DataBaseConnection().execute("mobileApp/user/getId.php","username", username).get();
+                            if(!id.equals("")){
+                                new DataBaseConnection().execute("mobileApp/group/addGroup.php", "groupname", "Prywatne notatki", "isPublic", "0");
+                                String groupId=new DataBaseConnection().execute("mobileApp/group/getIdByUserAndName.php", "groupname", "Prywatne notatki", "userId", id).get();
+                                new DataBaseConnection().execute("mobileApp/user/setPrivateGroup.php", "id", id, "groupId", groupId);
+                                new DataBaseConnection().execute("mobileApp/group/addUserToGroup.php", "groupId", groupId, "userId", id);
                                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                                 builder.setMessage("Pomyślnie dodano użytkownika");
                                 builder.setCancelable(false);

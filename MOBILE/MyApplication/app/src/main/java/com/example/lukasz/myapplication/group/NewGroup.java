@@ -123,7 +123,6 @@ public class NewGroup extends Activity {
             if(groupName.equals(name)){
                 String id=getRecords.getString("id");
                 new DataBaseConnection().execute("/mobileApp/group/addUserToGroup.php","userId",adminId,"groupId",id);
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setMessage("Pomyślnie dodano grupę");
                 builder.setCancelable(false);
