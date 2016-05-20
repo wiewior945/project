@@ -1,0 +1,12 @@
++rejestracja
++logowanie
++g³ówny ekran
++dodawanie grupy
++wyœwietlanie listy grup
++edycja u¿ytkownika
++dodawanie notatek
+
+-wyœwietlanie notatek
+-edycja grupy, usuwanie u¿ytkowników
+-edycja notatek
+-oznaczanie fragmentów notatek

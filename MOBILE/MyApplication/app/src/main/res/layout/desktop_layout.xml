@@ -25,7 +25,8 @@
             android:scaleType="fitCenter"
             android:nestedScrollingEnabled="false"
             android:layout_margin="5dp"
-            android:padding="5dp" />
+            android:padding="5dp"
+            android:onClick="addNote" />
 
         <ImageButton
             android:id="@+id/menuButton"
@@ -62,7 +63,7 @@
             android:textColor="#ffffff"
             android:textAllCaps="false"
             android:textSize="20dp"
-            android:text="Własne notatki"
+            android:text="notatki"
             android:onClick="groups" />
 
         <TextView

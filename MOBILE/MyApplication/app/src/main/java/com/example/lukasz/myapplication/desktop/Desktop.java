@@ -8,12 +8,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.Spinner;
 
 import com.example.lukasz.myapplication.R;
 import com.example.lukasz.myapplication.dataBase.DataBaseConnection;
+import com.example.lukasz.myapplication.group.Group;
 import com.example.lukasz.myapplication.group.NewGroup;
+import com.example.lukasz.myapplication.note.AddNote;
 import com.example.lukasz.myapplication.user.EditUser;
 import com.example.lukasz.myapplication.user.User;
 
@@ -31,14 +34,26 @@ import java.util.concurrent.ExecutionException;
 public class Desktop extends Activity {
 
     private User user;
+    private Group group;
+    private Button button;
+    private int privateGroupId;
 
      @Override
     protected void onCreate(Bundle savedInstanceState) {
          super.onCreate(savedInstanceState);
          setContentView(R.layout.desktop_layout);
+         button=(Button) findViewById(R.id.groupButton);
          user=(User) getIntent().getSerializableExtra("user");
-         //ustawić nazwę prywatnej grupy na przycisku
-    }
+         try { //utworzenie obiektu grupy użytkownika, grupa ta jest pokazuje się jako pierwsza
+             String groupName=new DataBaseConnection().execute("mobileApp/group/getNameById.php", "id", Integer.toString(user.getPrivateGroupId())).get();
+             group=new Group(user.getPrivateGroupId(), groupName, user.getId());
+             privateGroupId=group.getID();
+             button.setText(group.getName());
+
+         } catch (InterruptedException | ExecutionException e) {
+             e.printStackTrace();
+         }
+     }
 
     @Override
     public void onStart() {
@@ -87,7 +102,9 @@ public class Desktop extends Activity {
             menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem menuItem) {
-                    System.out.println(menuItem.getTitle());
+                    String name= (String) menuItem.getTitle();
+                    button.setText(name);
+                    //tutaj zmieniać grupę
                     return true;
                 }
             });
@@ -98,5 +115,11 @@ public class Desktop extends Activity {
         }
     }
 
+    public void addNote(View view){
+        Intent intent=new Intent(this, AddNote.class);
+        intent.putExtra("id", user.getId());
+        intent.putExtra("privateGroupId",privateGroupId);
+        startActivity(intent);
+    }
 
 }
