@@ -22,3 +22,11 @@ Route::get('/home', 'HomeController@index');
 Route::auth();
 
 Route::get('/home', 'HomeController@index');
+Route::group(['middleware' => ['web']], function () {
+    Route::get('/note', 'NoteController@showNote');
+    Route::get('/mynotes', 'NoteController@showMyNotes');
+    Route::get('/addnote', 'NoteController@addForm');
+    Route::post('/addNote', 'NoteController@createNote');
+    Route::get('/editnote', 'NoteController@editForm');
+    Route::post('/editNote', 'NoteController@editNote');
+});
