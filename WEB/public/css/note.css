@@ -67,3 +67,35 @@ input[type=submit], a.btn.btn-default {
     font-size: 18px;
     line-height: 19.85px;
 }
+/*Panel logowania*/
+.login-note.container, .register-note.container {
+    position: relative;
+    height: 780px;
+    margin: 0 auto;
+    padding: 0;
+    background-image: url(../images/reg-log-bg.jpg);
+    background-size: cover;
+    background-position: center;
+    font-family: 'Caveat';
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+.login-note form {
+    position: absolute;
+    width: 410px;
+    height:auto;
+    top: 346px;
+    left: 430px;
+}
+.login-note input[type=text] {
+    width: 410px;
+    border: none;
+    background: none;
+}
+.register-note .panel {
+    height: 350px;
+    margin: 180px 0;
+}
+/*Group*/
+.panel {
+    padding: 0;
+}
