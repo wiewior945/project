@@ -1,0 +1,7 @@
+.note {
+    width: 1600px;
+    height: calc(100vh - 50px);
+    background-image: url(../images/notebook-bg.png);
+    background-size: cover;
+    background-position: top left;
+}
