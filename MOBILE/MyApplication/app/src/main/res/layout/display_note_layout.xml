@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Tytuł"
+        android:id="@+id/NoteTitleText"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textSize="50dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:gravity="center_vertical"
+        android:layout_alignRight="@+id/DisplayNoteBackButton"
+        android:layout_alignEnd="@+id/DisplayNoteBackButton" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Wróć"
+        android:background="@drawable/rounded"
+        android:id="@+id/DisplayNoteBackButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:textAllCaps="false"
+        android:textSize="35dp"
+        android:layout_margin="5dp"
+        android:padding="5dp"
+        android:textColor="#ffffff"
+        android:onClick="cancel" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Notatka"
+        android:id="@+id/NoteText"
+        android:background="@drawable/textview_border"
+        android:layout_below="@+id/NoteTitleText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/DisplayNoteBackButton"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:textSize="25dp"
+        android:padding="5dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <ImageButton
+        android:layout_width="53dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded"
+        android:src="@drawable/pencil_icon"
+        android:scaleType="fitCenter"
+        android:id="@+id/displaynoteEditButton"
+        android:padding="5dp"
+        android:onClick="edit"
+        android:layout_alignTop="@+id/DisplayNoteBackButton"
+        android:layout_toLeftOf="@+id/DisplayNoteBackButton"
+        android:layout_toStartOf="@+id/DisplayNoteBackButton"
+        android:layout_alignBottom="@+id/DisplayNoteBackButton"
+        android:layout_marginLeft="5dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded"
+        android:text="Udostępnij"
+        android:textAllCaps="false"
+        android:id="@+id/button3"
+        android:padding="5dp"
+        android:textColor="#ffffff"
+        android:onClick="share"
+        android:layout_alignTop="@+id/displaynoteEditButton"
+        android:layout_toLeftOf="@+id/displaynoteEditButton"
+        android:layout_toStartOf="@+id/displaynoteEditButton"
+        android:textSize="35dp" />
+</RelativeLayout>

@@ -5,8 +5,10 @@
 +wyœwietlanie listy grup
 +edycja u¿ytkownika
 +dodawanie notatek
++wyœwietlanie notatek
++udsotêpnianie notatek
 
--wyœwietlanie notatek
+-wygl¹d przycisków
 -edycja grupy, usuwanie u¿ytkowników
--edycja notatek
--oznaczanie fragmentów notatek
+-kolory do notatek
+-usuwanie notatek

@@ -17,19 +17,21 @@ import java.util.concurrent.ExecutionException;
 /**
  * Created by Lukasz on 2016-05-20.
  */
-public class AddNote extends Activity {
+public class AddNote extends EditTools {
 
-    private String id, privateGroupId;
+    private String noteId, userId, privateGroupId;
     private EditText noteName, noteText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_note_layout);
-        id=Integer.toString((int) getIntent().getExtras().getInt("id"));
+        setNote("");
+        userId=Integer.toString((int) getIntent().getExtras().getInt("userId"));
         privateGroupId=Integer.toString((int) getIntent().getExtras().getInt("privateGroupId"));
         noteName=(EditText) findViewById(R.id.addNoteName);
-        noteText=(EditText) findViewById(R.id.addNoteNote);
+        noteText = (EditText) findViewById(R.id.addNoteNote);
+        setEditText(noteText);
     }
 
     @Override
@@ -42,15 +44,13 @@ public class AddNote extends Activity {
         super.onStop();
     }
 
-    public void add(View view){
+    public void save(View view){
         String name=noteName.getText().toString();
-        String note=noteText.getText().toString();
         try {
-            String noteId=new DataBaseConnection().execute("mobileApp/note/getId.php", "userId", id, "name", name).get();
+            String noteId=new DataBaseConnection().execute("mobileApp/note/getId.php", "userId", userId, "name", name).get();
             if(noteId.equals("")){
-                new DataBaseConnection().execute("mobileApp/note/addNote.php", "userId", id, "name", name, "note", note);
-                noteId=new DataBaseConnection().execute("mobileApp/note/getId.php", "userId", id, "name", name).get();
-                System.out.println("@@@1 "+noteId+","+privateGroupId);
+                new DataBaseConnection().execute("mobileApp/note/addNote.php", "userId", userId, "name", name, "note", getNote());
+                noteId=new DataBaseConnection().execute("mobileApp/note/getId.php", "userId", userId, "name", name).get();
                 new DataBaseConnection().execute("mobileApp/note/addNoteToGroup.php", "noteId", noteId, "groupId", privateGroupId);
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setMessage("Pomyślnie dodano notatkę");
@@ -79,5 +79,9 @@ public class AddNote extends Activity {
 
     public void cancel(View view){
         finish();
+    }
+
+    public void toolList(View view){
+
     }
 }

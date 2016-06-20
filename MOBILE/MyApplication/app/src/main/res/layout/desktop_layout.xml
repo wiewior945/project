@@ -79,4 +79,15 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp" />
     </RelativeLayout>
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1"
+        android:id="@+id/layoutForNotes"
+        android:columnOrderPreserved="false"
+        android:columnCount="4"
+        android:padding="5dp"></GridLayout>
+
 </LinearLayout>
