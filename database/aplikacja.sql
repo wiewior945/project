@@ -3,11 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
-<<<<<<< HEAD
--- Czas generowania: 20 Cze 2016, 14:44
-=======
--- Czas generowania: 23 Maj 2016, 12:27
->>>>>>> be54d3c4e83f212b804a1451f884e47ebf17b6ef
+-- Czas generowania: 20 Cze 2016, 23:06
 -- Wersja serwera: 10.1.10-MariaDB
 -- Wersja PHP: 7.0.4
 
@@ -44,9 +40,26 @@ CREATE TABLE `groups` (
 
 INSERT INTO `groups` (`id`, `name`, `adminID`, `isPublic`, `password`) VALUES
 (8, 'Prywatne notatki', 9, 0, ''),
-(9, 'tyu', 9, 1, ''),
-(10, 'rfc', 9, 0, 'rfc'),
-(11, 'qaz', 9, 0, 'qaz');
+(9, 'Testowanie', 1, 1, '');
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `migrations`
+--
+
+CREATE TABLE `migrations` (
+  `migration` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Zrzut danych tabeli `migrations`
+--
+
+INSERT INTO `migrations` (`migration`, `batch`) VALUES
+('2014_10_12_000000_create_users_table', 1),
+('2014_10_12_100000_create_password_resets_table', 1);
 
 -- --------------------------------------------------------
 
@@ -80,40 +93,18 @@ INSERT INTO `notegroup` (`noteId`, `groupId`) VALUES
 
 CREATE TABLE `notes` (
   `id` int(11) NOT NULL,
-  `userId` int(11) NOT NULL,
-  `name` varchar(10000) CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL,
-  `note` varchar(10000) CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL
+  `nazwa` varchar(255) CHARACTER SET ucs2 COLLATE ucs2_polish_ci NOT NULL,
+  `userID` int(11) NOT NULL,
+  `Contents` text CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL,
+  `Created` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Zrzut danych tabeli `notes`
 --
 
-INSERT INTO `notes` (`id`, `userId`, `name`, `note`) VALUES
-(9, 9, 'jakas', '<b>string</b> <font color="red">+++</font>'),
-(11, 9, 'nowa nazwa', '<p dir="ltr"><b><i><u>edytowana</u></i></b> notatka <b>ttt</b> ghb <i><u>tgfhbc</u></i> jgg</p>\n'),
-(12, 9, 'dluga dluga naaaaaazwa', '<p dir="ltr">ddd</p>\n'),
-(13, 9, 'czwarta', '<p dir="ltr"><b>fgvc</b></p>\n'),
-(14, 9, 'pionta', '<p dir="ltr"><b><u>pisionta</u></b></p>\n');
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `migrations`
---
-
-CREATE TABLE `migrations` (
-  `migration` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `batch` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Zrzut danych tabeli `migrations`
---
-
-INSERT INTO `migrations` (`migration`, `batch`) VALUES
-('2014_10_12_000000_create_users_table', 1),
-('2014_10_12_100000_create_password_resets_table', 1);
+INSERT INTO `notes` (`id`, `nazwa`, `userID`, `Contents`, `Created`) VALUES
+(6, 'Zażółć Gęślą jaźń', 1, 'Testowanie znaków polskich. Edytowałem!\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n', '13.06.2016 19:25:02');
 
 -- --------------------------------------------------------
 
@@ -164,9 +155,8 @@ CREATE TABLE `usergroup` (
 
 INSERT INTO `usergroup` (`userID`, `groupID`) VALUES
 (9, 8),
-(9, 9),
-(9, 10),
-(9, 11);
+(1, 8),
+(1, 9);
 
 -- --------------------------------------------------------
 
@@ -189,7 +179,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Grzegorz', 'grzegorz.leks@gmail.com', '$2y$10$Hvg1acMtryu66GfFE294BOmg3k6DNniqj3znLNjFrrL/2CLZZnt8K', NULL, '2016-05-23 08:25:49', '2016-05-23 08:25:49');
+(1, 'Grzegorz', 'grzegorz.leks@gmail.com', '$2y$10$fd68JORsdOm.BUueg14jrOoyyWEnCdHj5drHFp/W43YRH8g5IQjQi', 'HTfFfOREFeJSYiarxY1HB1no8L1JLHTBS8R65x97krbjtfNALNHrgr86cfhy', '2016-05-23 08:25:49', '2016-06-18 08:11:19');
 
 --
 -- Indeksy dla zrzutów tabel
@@ -202,18 +192,17 @@ ALTER TABLE `groups`
   ADD PRIMARY KEY (`id`);
 
 --
-<<<<<<< HEAD
 -- Indexes for table `notes`
 --
 ALTER TABLE `notes`
   ADD PRIMARY KEY (`id`);
-=======
+
+--
 -- Indexes for table `password_resets`
 --
 ALTER TABLE `password_resets`
   ADD KEY `password_resets_email_index` (`email`),
   ADD KEY `password_resets_token_index` (`token`);
->>>>>>> be54d3c4e83f212b804a1451f884e47ebf17b6ef
 
 --
 -- Indexes for table `user`
@@ -243,12 +232,12 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT dla tabeli `groups`
 --
 ALTER TABLE `groups`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT dla tabeli `notes`
 --
 ALTER TABLE `notes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT dla tabeli `user`
 --
@@ -259,17 +248,6 @@ ALTER TABLE `user`
 --
 ALTER TABLE `users`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- Ograniczenia dla zrzutów tabel
---
-
---
--- Ograniczenia dla tabeli `usergroup`
---
-ALTER TABLE `usergroup`
-  ADD CONSTRAINT `groupsCascade` FOREIGN KEY (`groupID`) REFERENCES `groups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `userCascade` FOREIGN KEY (`userID`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
