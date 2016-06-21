@@ -42,9 +42,12 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/mynotes') }}">Moje notatki</a></li>
-                    <li><a href="{{ url('/mygroups') }}">Moje grupy</a></li>
-                    <li><a href="{{ url('/addnote')}}">Dodaj notatkę</a></li>
+                    @if (Auth::guest())
+                    @else
+                        <li><a href="{{ url('/mynotes') }}">Moje notatki</a></li>
+                        <li><a href="{{ url('/mygroups') }}">Moje grupy</a></li>
+                        <li><a href="{{ url('/addnote')}}">Dodaj notatkę</a></li>
+                    @endif
                 </ul>
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">

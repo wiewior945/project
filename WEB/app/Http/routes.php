@@ -29,4 +29,9 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/addNote', 'NoteController@createNote');
     Route::get('/editnote', 'NoteController@editForm');
     Route::post('/editNote', 'NoteController@editNote');
+    //Grupy
+    Route::get('/createGroupForm', 'GroupController@createGroupForm');
+    Route::post('/creategroup', 'GroupController@createGroup');
+    Route::get('/mygroups', 'GroupController@myGroups');
+    Route::get('/group', 'GroupController@groupNotes');
 });
