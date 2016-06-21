@@ -7,10 +7,8 @@
 +dodawanie notatek
 +wyœwietlanie notatek
 +udsotêpnianie notatek
-
---- nie dodaje private group dla nowych
++usuwanie notatek
 
 -wygl¹d przycisków
 -edycja grupy, usuwanie u¿ytkowników
 -kolory do notatek
--usuwanie notatek

@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Czas generowania: 20 Cze 2016, 23:06
+-- Czas generowania: 21 Cze 2016, 19:05
 -- Wersja serwera: 10.1.10-MariaDB
--- Wersja PHP: 7.0.4
+-- Wersja PHP: 5.6.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Baza danych: `notesdb`
+-- Baza danych: `aplikacja`
 --
 
 -- --------------------------------------------------------
@@ -39,7 +39,6 @@ CREATE TABLE `groups` (
 --
 
 INSERT INTO `groups` (`id`, `name`, `adminID`, `isPublic`, `password`) VALUES
-(8, 'Prywatne notatki', 9, 0, ''),
 (9, 'Testowanie', 1, 1, '');
 
 -- --------------------------------------------------------
@@ -77,11 +76,6 @@ CREATE TABLE `notegroup` (
 --
 
 INSERT INTO `notegroup` (`noteId`, `groupId`) VALUES
-(9, 8),
-(11, 8),
-(12, 8),
-(13, 8),
-(14, 8),
 (11, 9),
 (9, 11);
 
@@ -93,9 +87,9 @@ INSERT INTO `notegroup` (`noteId`, `groupId`) VALUES
 
 CREATE TABLE `notes` (
   `id` int(11) NOT NULL,
-  `nazwa` varchar(255) CHARACTER SET ucs2 COLLATE ucs2_polish_ci NOT NULL,
-  `userID` int(11) NOT NULL,
-  `Contents` text CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL,
+  `userId` int(11) NOT NULL,
+  `note` text CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL,
   `Created` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -103,8 +97,8 @@ CREATE TABLE `notes` (
 -- Zrzut danych tabeli `notes`
 --
 
-INSERT INTO `notes` (`id`, `nazwa`, `userID`, `Contents`, `Created`) VALUES
-(6, 'Zażółć Gęślą jaźń', 1, 'Testowanie znaków polskich. Edytowałem!\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n', '13.06.2016 19:25:02');
+INSERT INTO `notes` (`id`, `name`, `userId`, `note`, `Created`) VALUES
+(6, '\0Z\0a|\0?B\0 \0G[\0l\0 \0j\0azD', 1, 'Testowanie znaków polskich. Edytowałem!\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n', '13.06.2016 19:25:02');
 
 -- --------------------------------------------------------
 
@@ -154,8 +148,6 @@ CREATE TABLE `usergroup` (
 --
 
 INSERT INTO `usergroup` (`userID`, `groupID`) VALUES
-(9, 8),
-(1, 8),
 (1, 9);
 
 -- --------------------------------------------------------
@@ -190,6 +182,13 @@ INSERT INTO `users` (`id`, `name`, `email`, `password`, `remember_token`, `creat
 --
 ALTER TABLE `groups`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `notegroup`
+--
+ALTER TABLE `notegroup`
+  ADD KEY `notesCascade` (`noteId`),
+  ADD KEY `groupCascade` (`groupId`);
 
 --
 -- Indexes for table `notes`
@@ -248,6 +247,23 @@ ALTER TABLE `user`
 --
 ALTER TABLE `users`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- Ograniczenia dla zrzutów tabel
+--
+
+--
+-- Ograniczenia dla tabeli `notegroup`
+--
+ALTER TABLE `notegroup`
+  ADD CONSTRAINT `groupCascade` FOREIGN KEY (`groupID`) REFERENCES `groups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `notesCascade` FOREIGN KEY (`noteId`) REFERENCES `notes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ograniczenia dla tabeli `usergroup`
+--
+ALTER TABLE `usergroup`
+  ADD CONSTRAINT `groupsCascade` FOREIGN KEY (`groupID`) REFERENCES `groups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

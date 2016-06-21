@@ -16,8 +16,8 @@
         android:textSize="35dp"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"
-        android:layout_toLeftOf="@+id/editTools"
-        android:layout_toStartOf="@+id/editTools" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -96,18 +96,17 @@
         android:onClick="cancel" />
 
     <ImageButton
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:background="@drawable/rounded"
-        android:src="@drawable/pencil_icon"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
         android:id="@+id/editTools"
+        android:src="@drawable/pencil_icon"
         android:scaleType="fitCenter"
+        android:background="@drawable/rounded"
         android:padding="5dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="5dp"
-        android:onClick="editTools" />
+        android:layout_alignTop="@+id/cancelNoteButton"
+        android:layout_toLeftOf="@+id/cancelNoteButton"
+        android:layout_toStartOf="@+id/cancelNoteButton"
+        android:layout_alignBottom="@+id/cancelNoteButton"
+        android:layout_marginRight="5dp" />
 
 </RelativeLayout>

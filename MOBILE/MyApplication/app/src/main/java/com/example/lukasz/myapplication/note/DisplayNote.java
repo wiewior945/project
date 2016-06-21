@@ -145,12 +145,12 @@ public class DisplayNote extends Activity {
         builder.setMessage("Czy na pewno chcesz usunąć notatkę?")
                 .setPositiveButton("Tak", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        System.out.println("Tak");
+                        new DataBaseConnection().execute("mobileApp/note/deleteNote.php", "noteId", noteId);
+                        finish();
                     }
                 })
                 .setNegativeButton("Nie", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        System.out.println("Nie");
                     }
                 });
         builder.show();
