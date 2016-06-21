@@ -2,12 +2,15 @@ package com.example.lukasz.myapplication.note;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
@@ -25,7 +28,7 @@ import java.util.concurrent.ExecutionException;
  */
 public class DisplayNote extends Activity {
 
-    private String userId, noteId, noteAdminId, note, name;
+    private String userId, noteId, noteAdminId, note, name, selectedGroupId;
     private String[] groupsId;
 
     @Override
@@ -34,7 +37,32 @@ public class DisplayNote extends Activity {
         setContentView(R.layout.display_note_layout);
         userId=Integer.toString((int) getIntent().getExtras().getInt("id"));
         noteId=getIntent().getExtras().getString("noteId");
+        selectedGroupId = getIntent().getExtras().getString("groupId");
         groupsId = getIntent().getExtras().getStringArray("groupsId");
+        try {
+            String privateGroup = new DataBaseConnection().execute("mobileApp/user/getPrivateGroupById.php", "id", userId).get();
+            if(!privateGroup.equals(selectedGroupId)){
+                Button button = (Button) findViewById(R.id.shareNoteButton);
+                button.setVisibility(View.GONE);
+            }
+            String jsonString = new DataBaseConnection().execute("mobileApp/note/getNoteById.php", "noteId", noteId).get();
+            JSONObject json = new JSONObject(jsonString);
+            JSONArray array = json.getJSONArray("records");
+            JSONObject object = array.getJSONObject(0);
+            noteAdminId = object.getString("userId");
+            if(!userId.equals(noteAdminId)){
+                ImageButton button = (ImageButton) findViewById(R.id.displayNoteDeleteButton);
+                button.setVisibility(View.GONE);
+                ImageButton btn = (ImageButton) findViewById(R.id.displaynoteEditButton);
+                btn.setVisibility(View.GONE);
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -110,5 +138,21 @@ public class DisplayNote extends Activity {
         } catch (InterruptedException | JSONException | ExecutionException e) {
             e.printStackTrace();
         }
+    }
+
+    public void deleteNote(View view){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Czy na pewno chcesz usunąć notatkę?")
+                .setPositiveButton("Tak", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        System.out.println("Tak");
+                    }
+                })
+                .setNegativeButton("Nie", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        System.out.println("Nie");
+                    }
+                });
+        builder.show();
     }
 }

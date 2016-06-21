@@ -18,20 +18,19 @@
         android:layout_alignRight="@+id/DisplayNoteBackButton"
         android:layout_alignEnd="@+id/DisplayNoteBackButton" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Wróć"
+    <ImageButton
+        android:layout_width="53dp"
+        android:layout_height="55dp"
+        android:src="@drawable/back_arrow_icon"
+        android:scaleType="fitCenter"
         android:background="@drawable/rounded"
         android:id="@+id/DisplayNoteBackButton"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:textAllCaps="false"
-        android:textSize="35dp"
         android:layout_margin="5dp"
-        android:padding="5dp"
-        android:textColor="#ffffff"
+        android:padding="3dp"
         android:onClick="cancel" />
 
     <TextView
@@ -47,7 +46,7 @@
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
         android:textSize="25dp"
-        android:padding="5dp"
+        android:padding="2dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
@@ -63,8 +62,8 @@
         android:layout_alignTop="@+id/DisplayNoteBackButton"
         android:layout_toLeftOf="@+id/DisplayNoteBackButton"
         android:layout_toStartOf="@+id/DisplayNoteBackButton"
-        android:layout_alignBottom="@+id/DisplayNoteBackButton"
-        android:layout_marginLeft="5dp" />
+        android:layout_marginLeft="5dp"
+        android:layout_alignBottom="@+id/DisplayNoteBackButton" />
 
     <Button
         android:layout_width="wrap_content"
@@ -72,12 +71,29 @@
         android:background="@drawable/rounded"
         android:text="Udostępnij"
         android:textAllCaps="false"
-        android:id="@+id/button3"
+        android:id="@+id/shareNoteButton"
         android:padding="5dp"
         android:textColor="#ffffff"
         android:onClick="share"
-        android:layout_alignTop="@+id/displaynoteEditButton"
+        android:textSize="30dp"
+        android:nestedScrollingEnabled="false"
+        android:layout_alignBottom="@+id/displayNoteDeleteButton"
+        android:layout_toLeftOf="@+id/displayNoteDeleteButton"
+        android:layout_toStartOf="@+id/displayNoteDeleteButton"
+        android:layout_alignTop="@+id/displayNoteDeleteButton" />
+
+    <ImageButton
+        android:layout_width="53dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded"
+        android:scaleType="fitCenter"
+        android:src="@drawable/delete_icon"
+        android:id="@+id/displayNoteDeleteButton"
+        android:padding="5dp"
+        android:layout_alignBottom="@+id/displaynoteEditButton"
         android:layout_toLeftOf="@+id/displaynoteEditButton"
         android:layout_toStartOf="@+id/displaynoteEditButton"
-        android:textSize="35dp" />
+        android:layout_alignTop="@+id/displaynoteEditButton"
+        android:layout_marginLeft="5dp"
+        android:onClick="deleteNote" />
 </RelativeLayout>

@@ -60,7 +60,8 @@
         android:layout_above="@+id/addNoteButton"
         android:textColor="#000000"
         android:paddingLeft="5dp"
-        android:paddingTop="5dp" />
+        android:paddingTop="5dp"
+        android:layout_marginBottom="5dp" />
 
     <Button
         android:layout_width="wrap_content"
@@ -68,17 +69,14 @@
         android:text="Zapisz"
         android:id="@+id/addNoteButton"
         android:textAllCaps="false"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="5dp"
-        android:layout_marginRight="5dp"
         android:textColor="#ffffff"
         android:background="@drawable/rounded"
         android:textSize="30dp"
         android:padding="7dp"
-        android:layout_marginTop="5dp"
-        android:onClick="save" />
+        android:onClick="save"
+        android:layout_alignTop="@+id/cancelNoteButton"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <Button
         android:layout_width="wrap_content"

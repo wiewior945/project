@@ -52,23 +52,23 @@ public class Desktop extends Activity implements View.OnClickListener {
          setContentView(R.layout.desktop_layout);
          button=(Button) findViewById(R.id.groupButton);
          user=(User) getIntent().getSerializableExtra("user");
+         try {
+             String groupName=new DataBaseConnection().execute("mobileApp/group/getNameById.php", "id", Integer.toString(user.getPrivateGroupId())).get();
+             selectedGroup=new Group(user.getPrivateGroupId(), groupName, user.getId());
+             privateGroupId=selectedGroup.getID();
+             button.setText(selectedGroup.getName());
+
+         } catch (InterruptedException | ExecutionException e) {
+             e.printStackTrace();
+         }
+         notesLayout = (ViewGroup) findViewById(R.id.layoutForNotes);
      }
 
     @Override
     public void onStart() {
         super.onStart();
-        try {
-            String groupName=new DataBaseConnection().execute("mobileApp/group/getNameById.php", "id", Integer.toString(user.getPrivateGroupId())).get();
-            selectedGroup=new Group(user.getPrivateGroupId(), groupName, user.getId());
-            privateGroupId=selectedGroup.getID();
-            button.setText(selectedGroup.getName());
-
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
-        notesLayout = (ViewGroup) findViewById(R.id.layoutForNotes);
         getGroups();
-        notesForGroup(selectedGroup.getName());
+        notesForGroup(Integer.toString(selectedGroup.getID()));
     }
 
     @Override
@@ -117,14 +117,15 @@ public class Desktop extends Activity implements View.OnClickListener {
             PopupMenu menu=new PopupMenu(this, view);
             for(String id:groupsID){
                 String name=new DataBaseConnection().execute("mobileApp/group/getNameById.php", "id", id).get();
-                menu.getMenu().add(name);
+                menu.getMenu().add(0,Integer.parseInt(id),0,name);
             }
             menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem menuItem) {
                     String name= (String) menuItem.getTitle();
+                    int id = menuItem.getItemId();
                     button.setText(name);
-                    notesForGroup(name);
+                    notesForGroup(Integer.toString(id));
                     return true;
                 }
             });
@@ -143,17 +144,17 @@ public class Desktop extends Activity implements View.OnClickListener {
     }
 
     // wyświetlenie notatek dla wybranej grupy
-    public void notesForGroup(String groupName){
+    public void notesForGroup(String groupId){
         try {
             notesLayout.removeAllViews();
             Context context = this;
             final float scale= context.getResources().getDisplayMetrics().density;
             int pixels = (int) (50 * scale + 0.5f);
-            String jsonString = new DataBaseConnection().execute("mobileApp/group/getGroupByName.php", "groupname", groupName).get();
+            String jsonString = new DataBaseConnection().execute("mobileApp/group/getGroupById.php", "groupId", groupId).get();
             JSONObject json = new JSONObject(jsonString);
             JSONArray jsonArray = json.getJSONArray("records");
             JSONObject obj = jsonArray.getJSONObject(0);
-            String groupId = obj.getString("id");
+            String groupName = obj.getString("name");
             String adminId = obj.getString("adminId");
             selectedGroup = new Group(Integer.parseInt(groupId), groupName, Integer.parseInt(adminId));
             jsonString = new DataBaseConnection().execute("mobileApp/note/getNotesForGroup.php", "groupId", groupId).get();
@@ -184,6 +185,7 @@ public class Desktop extends Activity implements View.OnClickListener {
         Intent intent=new Intent(this, DisplayNote.class);
         intent.putExtra("id", user.getId());
         intent.putExtra("noteId", noteId);
+        intent.putExtra("groupId", Integer.toString(selectedGroup.getID()));
         intent.putExtra("groupsId", groupsID);
         startActivity(intent);
     }

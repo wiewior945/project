@@ -1,0 +1,10 @@
+ka¿dy u¿ytkownik ma swoj¹ w³asn¹ unikaln¹ prywatn¹ grupê
+wszystkie notatki dodane przez uzytkownika sa w grupie prywatnej
+ka¿da nowa notatka domyœlnie trafia do grupy prywatnej
+notatkê mo¿na udostêpniæ tylko z grupy lokalnej
+u¿ytkownik tworz¹cy now¹ grupê jest jej administratorem
+
+notatkê edytowaæ mo¿e tylko u¿ytkownik który j¹ doda³
+
+
+u¿ytkownik usuwaj¹c notatkê z grupy prywatnej usuw¹ j¹ te¿ z wszystkich innych grup

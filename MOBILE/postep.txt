@@ -8,6 +8,8 @@
 +wyœwietlanie notatek
 +udsotêpnianie notatek
 
+--- nie dodaje private group dla nowych
+
 -wygl¹d przycisków
 -edycja grupy, usuwanie u¿ytkowników
 -kolory do notatek

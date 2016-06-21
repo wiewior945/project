@@ -96,10 +96,10 @@
         android:textSize="30dp"
         android:textColor="#ffffff"
         android:onClick="add"
-        android:layout_below="@+id/groupPassword2"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_margin="15dp" />
+        android:layout_margin="5dp" />
 
     <Button
         android:layout_width="wrap_content"
@@ -110,10 +110,10 @@
         android:textSize="30dp"
         android:text="Anuluj"
         android:id="@+id/button2"
-        android:layout_below="@+id/groupPassword2"
+        android:onClick="cancel"
+        android:layout_alignParentBottom="true"
         android:layout_toLeftOf="@+id/addGroupButton"
         android:layout_toStartOf="@+id/addGroupButton"
-        android:layout_marginTop="15dp"
-        android:onClick="cancel" />
+        android:layout_marginBottom="5dp" />
 
 </RelativeLayout>
