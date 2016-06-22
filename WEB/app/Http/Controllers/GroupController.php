@@ -40,13 +40,28 @@ class GroupController extends Controller
         return redirect()->intended('mygroups');
     }
     function groupNotes() {
-        $groupNotes = DB::table('')
-        ->where('groupID', $_GET['groupID'])
+        $groupNotes = DB::table('notegroup')
+        ->join('notes', 'notegroup.noteId', '=', 'notes.id')
+        ->where('groupId', $_GET['groupID'])
         ->get();
 
-        return view()->with('groupNotes', $groupNotes);
+        return View('group.noteslist')->with('groupNotes', $groupNotes);
     }
     function addUserToGroup() {
+        $userID = $_POST['userID'];
+        $groupID = $_POST['groupID'];
+
+        DB::table('userGroup')
+            ->insert([[
+                'useriId' => $userID,
+                'groupId' => $groupID
+            ]]);
+        return redirect()->intended('mygroups');
+    }
+    function addNoteToGroupForm() {
+
+    }
+    function addNoteToGroup() {
 
     }
 }
