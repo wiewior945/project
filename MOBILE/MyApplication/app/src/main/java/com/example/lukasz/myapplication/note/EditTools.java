@@ -2,7 +2,6 @@ package com.example.lukasz.myapplication.note;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.graphics.Color;
 import android.text.Html;
 import android.view.View;
 import android.widget.Button;
@@ -63,11 +62,11 @@ public class EditTools extends Activity {
             }
         });
 
-        final Button addButton = (Button) dialog.findViewById(R.id.addEditedText);
+        final Button addButton = (Button) dialog.findViewById(R.id.confirmSearchGroupPasswordButton);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final EditText dialogText = (EditText) dialog.findViewById(R.id.editText);
+                final EditText dialogText = (EditText) dialog.findViewById(R.id.searchGroupPasswordText);
                 String editedText = dialogText.getText().toString();
                 note = Html.toHtml(editText.getText());
                 note = note.replaceAll("</p>\n","");

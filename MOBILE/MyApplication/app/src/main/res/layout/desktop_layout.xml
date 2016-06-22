@@ -29,17 +29,49 @@
             android:onClick="addNote" />
 
         <ImageButton
-            android:id="@+id/menuButton"
-            android:layout_width="70dp"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
+            android:src="@drawable/add_group_icon"
             android:background="@drawable/rounded"
+            android:scaleType="fitCenter"
+            android:id="@+id/dsktopAddGroupButton"
+            android:padding="3dp"
+            android:onClick="newGroup"
+            android:layout_alignTop="@+id/addNoteButton"
+            android:layout_toRightOf="@+id/addNoteButton"
+            android:layout_toEndOf="@+id/addNoteButton"
+            android:layout_alignBottom="@+id/addNoteButton" />
+
+        <ImageButton
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/search_group_icon"
+            android:scaleType="fitCenter"
+            android:background="@drawable/rounded"
+            android:id="@+id/searchGroupButton"
+            android:padding="4dp"
+            android:onClick="searchGroup"
+            android:layout_alignTop="@+id/dsktopAddGroupButton"
+            android:layout_toRightOf="@+id/dsktopAddGroupButton"
+            android:layout_toEndOf="@+id/dsktopAddGroupButton"
+            android:layout_alignBottom="@+id/dsktopAddGroupButton"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp" />
+
+        <ImageButton
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/menuButton"
             android:src="@drawable/menu_icon"
-            android:onClick="menu"
-            android:layout_centerVertical="true"
+            android:scaleType="fitCenter"
+            android:background="@drawable/rounded"
+            android:padding="5dp"
+            android:layout_alignTop="@+id/dsktopAddGroupButton"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:scaleType="fitCenter"
-            android:layout_margin="5dp" />
+            android:layout_alignBottom="@+id/searchGroupButton"
+            android:layout_marginRight="5dp"
+            android:onClick="menu" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -88,6 +120,7 @@
         android:id="@+id/layoutForNotes"
         android:columnOrderPreserved="false"
         android:columnCount="4"
-        android:padding="5dp"></GridLayout>
+        android:padding="5dp"
+        android:onClick="menu"></GridLayout>
 
 </LinearLayout>

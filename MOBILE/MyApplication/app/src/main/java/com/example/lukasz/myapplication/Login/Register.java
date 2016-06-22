@@ -72,7 +72,7 @@ public class Register extends Activity {
                             new DataBaseConnection().execute("mobileApp/register/register.php", "username", username, "password", password1).get();
                             String id = new DataBaseConnection().execute("mobileApp/user/getId.php","username", username).get();
                             if(!id.equals("")){
-                                new DataBaseConnection().execute("mobileApp/group/addGroup.php", "groupname", "Prywatne notatki", "isPublic", "0", "adminID", id);
+                                new DataBaseConnection().execute("mobileApp/group/addGroup.php", "groupname", "Prywatne notatki", "isPublic", "0", "adminID", id, "isPrivate", "1");
                                 String groupId=new DataBaseConnection().execute("mobileApp/group/getIdByUserAndName.php", "groupname", "Prywatne notatki", "userId", id).get();
                                 new DataBaseConnection().execute("mobileApp/user/setPrivateGroup.php", "id", id, "groupId", groupId);
                                 new DataBaseConnection().execute("mobileApp/group/addUserToGroup.php", "groupId", groupId, "userId", id);

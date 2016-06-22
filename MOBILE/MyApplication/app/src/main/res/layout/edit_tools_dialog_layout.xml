@@ -46,7 +46,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/textview_border"
-        android:id="@+id/editText"
+        android:id="@+id/searchGroupPasswordText"
         android:layout_below="@+id/boldButton"
         android:textSize="30dp"
         android:layout_marginTop="5dp"
@@ -65,8 +65,8 @@
         android:textAllCaps="false"
         android:background="@drawable/rounded"
         android:text="Dodaj"
-        android:id="@+id/addEditedText"
-        android:layout_below="@+id/editText"
+        android:id="@+id/confirmSearchGroupPasswordButton"
+        android:layout_below="@+id/searchGroupPasswordText"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_margin="5dp"
@@ -82,7 +82,7 @@
         android:background="@drawable/rounded"
         android:textSize="30dp"
         android:textColor="#ffffff"
-        android:layout_alignTop="@+id/addEditedText"
-        android:layout_toLeftOf="@+id/addEditedText"
-        android:layout_toStartOf="@+id/addEditedText" />
+        android:layout_alignTop="@+id/confirmSearchGroupPasswordButton"
+        android:layout_toLeftOf="@+id/confirmSearchGroupPasswordButton"
+        android:layout_toStartOf="@+id/confirmSearchGroupPasswordButton" />
 </RelativeLayout>

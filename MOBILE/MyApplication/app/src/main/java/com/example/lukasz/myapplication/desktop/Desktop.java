@@ -21,6 +21,7 @@ import com.example.lukasz.myapplication.R;
 import com.example.lukasz.myapplication.dataBase.DataBaseConnection;
 import com.example.lukasz.myapplication.group.Group;
 import com.example.lukasz.myapplication.group.NewGroup;
+import com.example.lukasz.myapplication.group.SearchGroup;
 import com.example.lukasz.myapplication.note.AddNote;
 import com.example.lukasz.myapplication.note.DisplayNote;
 import com.example.lukasz.myapplication.user.EditUser;
@@ -84,7 +85,7 @@ public class Desktop extends Activity implements View.OnClickListener {
         popup.show();
     }
 
-    public void newGroup(MenuItem item){
+    public void newGroup(View view){
         Intent intent=new Intent(this, NewGroup.class);
         intent.putExtra("adminId", user.getId());
         startActivity(intent);
@@ -187,6 +188,16 @@ public class Desktop extends Activity implements View.OnClickListener {
         intent.putExtra("noteId", noteId);
         intent.putExtra("groupId", Integer.toString(selectedGroup.getID()));
         intent.putExtra("groupsId", groupsID);
+        startActivity(intent);
+    }
+
+    public void logout(MenuItem menuItem){
+        finish();
+    }
+
+    public void searchGroup(View view){
+        Intent intent=new Intent(this, SearchGroup.class);
+        intent.putExtra("userId", Integer.toString(user.getId()));
         startActivity(intent);
     }
 }

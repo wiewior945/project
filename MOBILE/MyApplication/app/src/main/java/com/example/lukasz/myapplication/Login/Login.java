@@ -37,6 +37,8 @@ public class Login extends Activity {
     @Override
     public void onStart() {
         super.onStart();
+        loginText.setText("");
+        passwordText.setText("");
     }
 
     @Override
