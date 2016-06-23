@@ -26,4 +26,13 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    public function authoriseMobile() {
+        $user = $_POST['username'];
+        $password = Hash::make($_POST['pasword']);
+
+        if(Auth::atempt(['email' => $user, 'password' => $password])) {
+            return true;
+        }
+    }
 }

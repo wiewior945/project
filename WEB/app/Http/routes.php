@@ -16,11 +16,9 @@ Route::get('/', function () {
 });
 
 Route::auth();
-
 Route::get('/home', 'HomeController@index');
-
 Route::auth();
-
+Route::post('/mobilelogin', 'HomeController@authoriseMobile');
 Route::get('/home', 'HomeController@index');
 Route::group(['middleware' => ['web']], function () {
     Route::get('/note', 'NoteController@showNote');
