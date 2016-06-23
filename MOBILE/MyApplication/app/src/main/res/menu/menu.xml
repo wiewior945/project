@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/leaveGroup"
+        android:title="Opuść grupę"
+        android:onClick="leaveGroup"
+        />
+    <item
         android:id="@+id/edit_user"
         android:title="Edycja danych"
         android:onClick="editUser"

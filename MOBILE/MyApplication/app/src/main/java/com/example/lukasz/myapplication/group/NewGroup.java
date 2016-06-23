@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -29,11 +30,14 @@ public class NewGroup extends Activity {
 
     private EditText password, password2, groupName;
     private String adminId;
+    private Button deleteMember;
 
      @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
          setContentView(R.layout.new_group_layout);
+         deleteMember = (Button) findViewById(R.id.deleteGroupMemberButton);
+         deleteMember.setVisibility(View.GONE);
          int id=(int) getIntent().getExtras().getInt("adminId");
          adminId= Integer.toString(id);
          groupName=(EditText) findViewById(R.id.groupName);

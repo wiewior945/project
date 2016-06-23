@@ -1,6 +1,7 @@
 package com.example.lukasz.myapplication.desktop;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,12 +14,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.Spinner;
 
 import com.example.lukasz.myapplication.R;
 import com.example.lukasz.myapplication.dataBase.DataBaseConnection;
+import com.example.lukasz.myapplication.group.EditGroup;
 import com.example.lukasz.myapplication.group.Group;
 import com.example.lukasz.myapplication.group.NewGroup;
 import com.example.lukasz.myapplication.group.SearchGroup;
@@ -31,6 +34,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -38,11 +42,12 @@ import java.util.concurrent.ExecutionException;
 /**
  * Created by Lukasz on 2016-04-14.
  */
-public class Desktop extends Activity implements View.OnClickListener {
+public class Desktop extends Activity implements View.OnClickListener, Serializable {
 
     private User user;
     private Group selectedGroup;
-    private Button button;
+    private static Button button;
+    private ImageButton editGroupButton;
     private int privateGroupId;
     private ViewGroup notesLayout;
     private String[] groupsID;
@@ -53,6 +58,7 @@ public class Desktop extends Activity implements View.OnClickListener {
          setContentView(R.layout.desktop_layout);
          button=(Button) findViewById(R.id.groupButton);
          user=(User) getIntent().getSerializableExtra("user");
+         editGroupButton = (ImageButton) findViewById(R.id.editGroupButton);
          try {
              String groupName=new DataBaseConnection().execute("mobileApp/group/getNameById.php", "id", Integer.toString(user.getPrivateGroupId())).get();
              selectedGroup=new Group(user.getPrivateGroupId(), groupName, user.getId());
@@ -123,9 +129,7 @@ public class Desktop extends Activity implements View.OnClickListener {
             menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem menuItem) {
-                    String name= (String) menuItem.getTitle();
                     int id = menuItem.getItemId();
-                    button.setText(name);
                     notesForGroup(Integer.toString(id));
                     return true;
                 }
@@ -156,8 +160,15 @@ public class Desktop extends Activity implements View.OnClickListener {
             JSONArray jsonArray = json.getJSONArray("records");
             JSONObject obj = jsonArray.getJSONObject(0);
             String groupName = obj.getString("name");
+            button.setText(groupName);
             String adminId = obj.getString("adminId");
             selectedGroup = new Group(Integer.parseInt(groupId), groupName, Integer.parseInt(adminId));
+            if(Integer.toString(user.getId()).equals(adminId)){
+                editGroupButton.setVisibility(View.VISIBLE);
+            }
+            else{
+                editGroupButton.setVisibility(View.INVISIBLE);
+            }
             jsonString = new DataBaseConnection().execute("mobileApp/note/getNotesForGroup.php", "groupId", groupId).get();
             json = new JSONObject(jsonString);
             jsonArray = json.getJSONArray("records");
@@ -199,5 +210,35 @@ public class Desktop extends Activity implements View.OnClickListener {
         Intent intent=new Intent(this, SearchGroup.class);
         intent.putExtra("userId", Integer.toString(user.getId()));
         startActivity(intent);
+    }
+
+    public void editGroup(View view){
+        Intent intent=new Intent(this, EditGroup.class);
+        intent.putExtra("userId", Integer.toString(user.getId()));
+        intent.putExtra("groupId", Integer.toString(selectedGroup.getID()));
+        startActivity(intent);
+    }
+
+    public static void updateGroupName(String name){
+        button.setText(name);
+    }
+
+    public void leaveGroup(MenuItem menuItem){
+            if(selectedGroup.getID()!=user.getPrivateGroupId()){
+                new DataBaseConnection().execute("mobileApp/group/deleteUserFromGroup.php", "userId", Integer.toString(user.getId()),
+                        "groupId", Integer.toString(selectedGroup.getID()));
+                getGroups();
+                notesForGroup(Integer.toString(user.getPrivateGroupId()));
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("Opuszczono grupę");
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }
+            else{
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("Tej grupy nie możesz opuścić");
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }
     }
 }

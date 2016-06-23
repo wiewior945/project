@@ -9,7 +9,9 @@
 +udsotêpnianie notatek
 +usuwanie notatek
 +do³¹cznie do grupy
++edycja grupy
++usuwanie uzytkowników z grupy
++opusczanie grupy
 
 -wygl¹d przycisków
--edycja grupy, usuwanie u¿ytkowników
 -kolory do notatek

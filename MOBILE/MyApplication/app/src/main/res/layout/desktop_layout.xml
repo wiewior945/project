@@ -72,6 +72,20 @@
             android:layout_alignBottom="@+id/searchGroupButton"
             android:layout_marginRight="5dp"
             android:onClick="menu" />
+
+        <ImageButton
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded"
+            android:id="@+id/editGroupButton"
+            android:src="@drawable/settings_group_icon"
+            android:scaleType="fitCenter"
+            android:padding="3dp"
+            android:onClick="editGroup"
+            android:layout_alignTop="@+id/searchGroupButton"
+            android:layout_toRightOf="@+id/searchGroupButton"
+            android:layout_toEndOf="@+id/searchGroupButton"
+            android:layout_alignBottom="@+id/menuButton" />
     </RelativeLayout>
 
     <RelativeLayout
