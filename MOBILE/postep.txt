@@ -12,6 +12,6 @@
 +edycja grupy
 +usuwanie uzytkowników z grupy
 +opusczanie grupy
++wygl¹d przycisków
 
--wygl¹d przycisków
 -kolory do notatek

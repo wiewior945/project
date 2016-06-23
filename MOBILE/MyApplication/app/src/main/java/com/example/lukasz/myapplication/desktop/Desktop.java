@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.Spinner;
 
@@ -154,7 +156,12 @@ public class Desktop extends Activity implements View.OnClickListener, Serializa
             notesLayout.removeAllViews();
             Context context = this;
             final float scale= context.getResources().getDisplayMetrics().density;
-            int pixels = (int) (50 * scale + 0.5f);
+            int pixels = (int) (5 * scale + 0.5f);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            );
+            params.setMargins(pixels,pixels,pixels,0);
             String jsonString = new DataBaseConnection().execute("mobileApp/group/getGroupById.php", "groupId", groupId).get();
             JSONObject json = new JSONObject(jsonString);
             JSONArray jsonArray = json.getJSONArray("records");
@@ -178,7 +185,11 @@ public class Desktop extends Activity implements View.OnClickListener, Serializa
                 String name=obj.getString("name");
                 String id=obj.getString("noteId");
                 Button button = new Button(this);
-                button.setMaxWidth(pixels);
+                button.setLayoutParams(params);
+                button.setTextColor(Color.WHITE);
+                button.setAllCaps(false);
+                button.setTextSize(25);
+                button.setBackgroundResource(R.drawable.rounded);
                 button.setText(name);
                 button.setTag(id);
                 button.setOnClickListener(this);
