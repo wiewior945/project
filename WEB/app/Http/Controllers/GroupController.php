@@ -14,9 +14,10 @@ class GroupController extends Controller
             return redirect()->intended('login');
         }
         $groups = DB::table('groups')
-                    ->join('usergroup', 'groups.id', '=', 'usergroup.groupID')
-                    ->where('usergroup.userID', Auth::user()->id)
-                    ->get();
+                      ->distinct()
+                      ->join('usergroup', 'groups.id', '=', 'usergroup.groupID')
+                      ->where('usergroup.userID', Auth::user()->id)
+                      ->get();
         return View('group.list')->with('groups', $groups);
     }
     function createGroupForm() {
@@ -26,12 +27,12 @@ class GroupController extends Controller
         $isPublic = $_POST['isPublic'] == true ? 1: 0;
 
         DB::table('groups')
-          ->insert([[
+            ->insert([[
                 'name' => $_POST['groupName'],
                 'adminID' => Auth::user()->id,
                 'isPublic' => $isPublic,
                 'password' => $_POST['password'],
-          ]]);
+            ]]);
         DB::table('userGroup')
             ->insert([[
                 'userID' => Auth::user()->id,
@@ -41,27 +42,53 @@ class GroupController extends Controller
     }
     function groupNotes() {
         $groupNotes = DB::table('notegroup')
-        ->join('notes', 'notegroup.noteId', '=', 'notes.id')
-        ->where('groupId', $_GET['groupID'])
-        ->get();
+                        ->distinct()
+                        ->join('notes', 'notegroup.noteId', '=', 'notes.id')
+                        ->where('groupId', $_GET['groupID'])
+                        ->get();
 
         return View('group.noteslist')->with('groupNotes', $groupNotes);
     }
+    function shareNote() {
+        if(!Auth::check()) {
+            return redirect()->intended('login');
+        }
+        $noteID = $_GET['noteID'];
+        $groups = DB::table('groups')
+                      ->join('usergroup', 'groups.id', '=', 'usergroup.groupID')
+                      ->where('usergroup.userID', Auth::user()->id)
+                      ->get();
+        return View('group.sharenote')->with('noteID', $noteID)->with('groups', $groups);
+    }
+    function saveSharingNote() {
+        $noteID = $_POST['noteID'];
+        $groupID = $_POST['groupID'];
+
+        DB::table('notegroup')
+            ->insert([[
+                'noteId' => $noteID,
+                'groupId' => $groupID
+            ]]);
+        return redirect()->intended("/mygroups");
+    }
+    function addUserToGroupForm() {
+        $groupID = $_GET['groupID'];
+        return view("group.addUser")->with('groupID', $groupID);
+    }
     function addUserToGroup() {
-        $userID = $_POST['userID'];
+        $userID = DB::table('users')
+                      ->where('email', $_POST['email'])
+                      ->get();
+        if($userID == null) {
+            return view("Errors.userNotExist");
+        }
         $groupID = $_POST['groupID'];
 
         DB::table('userGroup')
             ->insert([[
-                'useriId' => $userID,
-                'groupId' => $groupID
+                'userID' => $userID[0]->id,
+                'groupID' => $groupID
             ]]);
         return redirect()->intended('mygroups');
-    }
-    function addNoteToGroupForm() {
-
-    }
-    function addNoteToGroup() {
-
     }
 }

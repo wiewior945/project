@@ -13,6 +13,8 @@
                 }
             ?>
         </ul>
-        <a href="/createGroupForm" class="btn btn-default">Utwórz grupę</a>
+        <div class="buttons">
+            <a href="/createGroupForm" class="btn btn-default">Utwórz grupę</a>
+        </div>
     </div>
 @endsection

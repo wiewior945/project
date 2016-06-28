@@ -32,4 +32,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/creategroup', 'GroupController@createGroup');
     Route::get('/mygroups', 'GroupController@myGroups');
     Route::get('/group', 'GroupController@groupNotes');
+    Route::get('/sharenote', 'GroupController@shareNote');
+    Route::post('/sharenote', 'GroupController@saveSharingNote');
+    Route::get('/adduser', 'GroupController@addUserToGroupForm');
+    Route::post('/addUserToGroup', "GroupController@addUserToGroup");
 });

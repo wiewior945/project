@@ -4,7 +4,23 @@
 <form class="note container" action="{{url('/addNote')}}" method="POST">
     {!! csrf_field() !!}
     <textarea type="text" name="nazwa" class="nazwa" placeholder="Podaj nazwę swojej notatki..." required></textarea>
-    <textarea class="Contents" name="Contents" placeholder="Tutaj wpisz jej treść..." required></textarea>
-    <input type="submit" value="Dodaj" class="btn btn-default" />
+    <textarea id="Content" class="Contents" name="Contents" placeholder="Tutaj wpisz jej treść..." required></textarea>
+    <div class="buttons">
+        <input type="submit" value="Dodaj" class="btn btn-default" />
+    </div>
 </form>
+<script>
+    tinymce.init({
+        selector: '#Content',
+        plugins: 'code',
+        toolbar: 'undo redo bold italic alignleft aligncenter alignright numlist',
+        menubar: false,
+        setup: function (ed) {
+            ed.on('keyup', function (e) {
+                var count = CountCharactersPL();
+                document.getElementById("plCount").innerHTML = count;
+            });
+        }
+    });
+</script>
 @endsection
