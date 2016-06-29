@@ -24,7 +24,7 @@ class GroupController extends Controller
         return view('group.groupForm'); 
     }
     function createGroup() {
-        $isPublic = $_POST['isPublic'] == true ? 1: 0;
+        $isPublic = isset($_POST['isPublic']) ? 1: 0;
 
         DB::table('groups')
             ->insert([[
@@ -39,6 +39,25 @@ class GroupController extends Controller
                 'groupID' => DB::getPdo()->lastInsertId()
             ]]);
         return redirect()->intended('mygroups');
+    }
+    function editGroupForm() {
+         $group= DB::table('groups')->where('id', $_GET['groupID'])->get();
+        return view('group.edit')->with('group', $group[0]);
+    }
+    function editGroup() {
+        $nazwa = $_POST['nazwa'];
+        $password = $_POST['password'];
+        $isPublic = $_POST['isPublic'] == true ? 1 : 0;
+        if($password == ""){
+            DB::table('groups')
+            ->where('id', $_POST['id'])
+            ->update(array('name' => $nazwa, 'isPublic' => $isPublic));    
+        } else {
+            DB::table('groups')
+                ->where('id', $_POST['id'])
+                ->update(array('name' => $nazwa, 'password' => $password, 'isPublic' => $isPublic));
+        }
+        return redirect()->intended('/mygroups');
     }
     function groupNotes() {
         $groupNotes = DB::table('notegroup')
@@ -79,16 +98,57 @@ class GroupController extends Controller
         $userID = DB::table('users')
                       ->where('email', $_POST['email'])
                       ->get();
-        if($userID == null) {
-            return view("Errors.userNotExist");
-        }
         $groupID = $_POST['groupID'];
-
+        if($userID == null) {
+           return view("group.addUser")->with('groupID', $groupID)->with('error', "true");
+        }
         DB::table('userGroup')
             ->insert([[
                 'userID' => $userID[0]->id,
                 'groupID' => $groupID
             ]]);
         return redirect()->intended('mygroups');
+    }
+    function searchGroup() {
+        if(!isset($_POST['query'])) {
+            return view('group.search');
+        } else {
+            $query = "%". $_POST['query']. "%";
+            $groups = DB::table('groups')
+                          ->where('name', 'like', $query)
+                          ->get();
+            return view('group.search')->with('groups', $groups);
+        }
+    }
+    function joinGroup() {
+        if(isset($_GET['id'])) {
+            $group = DB::table('groups')
+                         ->where('id', $_GET['id'])
+                         ->get();
+        } else if(isset($_POST['id'])) {
+            $group = DB::table('groups')
+                         ->where('id', $_POST['id'])
+                         ->get();
+        }
+        if($group[0]->isPublic == 1 && !isset($_POST['password'])) {
+             DB::table('userGroup')
+                 ->insert([[
+                    'userID' => Auth::user()->id,
+                    'groupID' => $_GET['id']
+                 ]]);
+             return redirect()->intended('mygroups'); 
+        } else if(!isset($_POST['password'])) {
+            return view('group.password')->with("groupID", $_GET['id']);
+        }
+        if(isset($_POST['password']) && $group[0]->password == $_POST['password']) {
+            DB::table('userGroup')
+                ->insert([[
+                    'userID' => Auth::user()->id,
+                    'groupID' => $_POST['id']
+                ]]);
+            return redirect()->intended('mygroups'); 
+        } else {
+            return view('group.password')->with("groupID", $_POST['id'])->with('password', "error");
+        }
     }
 }

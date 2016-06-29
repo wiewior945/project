@@ -15,7 +15,7 @@
                 </div>
                 <div class="form-group">
                     <label for="isPublic">Grupa publiczna?</label>
-                    <input type="checkbox" name="isPublic" />
+                    <input type="checkbox" name="isPublic" checked />
                 </div>
                 <button type="submit" class="btn btn-primary">Utwórz grupę</button>
             </form>

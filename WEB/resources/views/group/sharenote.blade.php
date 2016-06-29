@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <div class="panel panel-success4 container">
-        <div class="panel-heading">Utwórz nową grupę!</div>
+        <div class="panel-heading">Udostępnij notatkę w grupie!</div>
         <div class="panel-body">
             <form action="/sharenote" method="POST">
                 {{ csrf_field() }}
