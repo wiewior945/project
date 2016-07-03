@@ -12,7 +12,11 @@
                     echo '</li>'; 
                 }
             ?>
-        </ul>
-        <a href="/createGroupForm" class="btn btn-default">Utwórz grupę</a>
+        </ul> 
+        <div class="buttons">
+            <a href="/adduser?groupID={{ $_GET['groupID'] }}" class="btn btn-default" >Dodaj użytkownika do grupy</a>
+            <a href="/createGroupForm" class="btn btn-default">Utwórz nową grupę</a>
+            <a href="/editGroupForm?groupID={{ $_GET['groupID'] }}" class="btn btn-default">Edytuj dane grupy</a>
+        </div>
     </div>
 @endsection

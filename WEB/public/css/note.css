@@ -24,7 +24,7 @@ body {
     font-size: 35px;
     font-weight: bold;
 }
-.left-column, .right-column {
+.left-column {
     display: inline-block;
     width: 40.5%;
     margin-top: 0;
@@ -57,10 +57,16 @@ body {
     background: none;
     border: none;
 }
-input[type=submit], a.btn.btn-default {
+input[type=submit], .buttons {
     position: absolute;
     right: 20px;
     bottom: 20px;
+}
+.mce-container {
+    font-family: 'tinymce', Arial !important;
+}
+.mce-container * {
+    font-family: inherit;
 }
 .notes-list {
     margin: 0 0 0 55px;
@@ -98,4 +104,7 @@ input[type=submit], a.btn.btn-default {
 /*Group*/
 .panel {
     padding: 0;
+}
+.error {
+    color: red;
 }

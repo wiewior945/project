@@ -13,6 +13,9 @@
                 }
             ?>
         </ul>
-        <a href="/createGroupForm" class="btn btn-default">Utwórz grupę</a>
+        <div class="buttons">
+            <a href="/createGroupForm" class="btn btn-default">Utwórz grupę</a>
+            <a href="/searchGroup" class="btn btn-default">Szukaj grupy</a>
+        </div>
     </div>
 @endsection

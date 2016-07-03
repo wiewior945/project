@@ -32,4 +32,17 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/creategroup', 'GroupController@createGroup');
     Route::get('/mygroups', 'GroupController@myGroups');
     Route::get('/group', 'GroupController@groupNotes');
+    Route::get('/sharenote', 'GroupController@shareNote');
+    Route::post('/sharenote', 'GroupController@saveSharingNote');
+    Route::get('/adduser', 'GroupController@addUserToGroupForm');
+    Route::post('/addUserToGroup', "GroupController@addUserToGroup");
+    Route::get('/editGroupForm', "GroupController@editGroupForm");
+    Route::post('/editGroup', "GroupController@editGroup");
+    Route::get('/searchGroup', "GroupController@searchGroup");
+    Route::post('/searchGroup', "GroupController@searchGroup");
+    Route::get('/joinGroup', "GroupController@joinGroup");
+    Route::post('/joinGroup', "GroupController@joinGroup");
+    //user
+    Route::get('editUser', "HomeController@editUserForm");
+    Route::post('editUser', "HomeController@editUser");
 });
