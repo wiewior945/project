@@ -74,6 +74,7 @@ class GroupController extends Controller
         }
         $noteID = $_GET['noteID'];
         $groups = DB::table('groups')
+                      ->distinct()
                       ->join('usergroup', 'groups.id', '=', 'usergroup.groupID')
                       ->where('usergroup.userID', Auth::user()->id)
                       ->get();
