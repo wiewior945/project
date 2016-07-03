@@ -17,7 +17,7 @@ import java.net.URLEncoder;
  */
 public class DataBaseConnection extends AsyncTask<String,Void,String> {
 
-    private String serverAdres = "http://192.168.0.66:80/";
+    private String serverAdres = "http://31.178.158.32:6666/";
 
     @Override
     protected String doInBackground(String... params) {
@@ -34,6 +34,7 @@ public class DataBaseConnection extends AsyncTask<String,Void,String> {
             OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
             wr.write( data );
             wr.flush();
+            wr.close();
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             StringBuilder sb = new StringBuilder();
@@ -43,6 +44,7 @@ public class DataBaseConnection extends AsyncTask<String,Void,String> {
                 sb.append(line);
                 break;
             }
+            reader.close();
             return sb.toString();
         }
         catch(Exception e){

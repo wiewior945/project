@@ -50,38 +50,27 @@ public class Login extends Activity {
     public void login(View view) {
         String login=loginText.getText().toString();
         try {
-            if(!login.equals("")){
-                String password=passwordText.getText().toString();
-                if(!password.equals("")){
-                    if(new DataBaseConnection().execute("mobileApp/login/username.php", "username", login).get().equals(login)){
-                        if(new DataBaseConnection().execute("mobileApp/login/password.php", "password", password).get().equals(password)){
-                            DataBaseConnection a=new DataBaseConnection();
-                            String b=a.execute("mobileApp/login/getUser.php", "username", login).get();
-                            JSONObject json = new JSONObject(b);
-                            JSONArray tablica=null;
-                            tablica=json.getJSONArray("records");
-                            JSONObject c=tablica.getJSONObject(0);
-                            String jsonID=c.getString("id");
-                            int id = Integer.parseInt(jsonID);
-                            String name=c.getString("username");
-                            String jsonGroupId=c.getString("privateGroup");
-                            int privateGroupId=Integer.parseInt(jsonGroupId);
+            if (!login.equals("")) {
+                String password = passwordText.getText().toString();
+                if (!password.equals("")) {
+                    String id = new DataBaseConnection().execute("mobileApp/login/login.php", "username", login, "password", password).get();
+                    if(!id.equals("")) {
+                        String jsonString = new DataBaseConnection().execute("mobileApp/login/getUser.php", "id", id).get();
+                        JSONObject json = new JSONObject(jsonString);
+                        JSONArray tablica = json.getJSONArray("records");
+                        JSONObject c = tablica.getJSONObject(0);
+                        String name = c.getString("Username");
+                        String jsonGroupId = c.getString("privateGroup");
+                        int privateGroupId = Integer.parseInt(jsonGroupId);
 
-                            User user = new User(name,id, privateGroupId);
-                            Intent intent = new Intent(this,Desktop.class);
-                            intent.putExtra("user",user);
-                            startActivity(intent);
-                        }
-                        else{
-                            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                            builder.setMessage("Błędne hasło");
-                            AlertDialog alertDialog = builder.create();
-                            alertDialog.show();
-                        }
+                        User user = new User(name, Integer.parseInt(id), privateGroupId);
+                        Intent intent = new Intent(this, Desktop.class);
+                        intent.putExtra("user", user);
+                        startActivity(intent);
                     }
                     else{
                         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                        builder.setMessage("Taki użytkownik nie istnieje. Jeśli nie masz jeszcze konta załóż je klikając w przycisk rejestracja");
+                        builder.setMessage("Błędne dane logowania");
                         AlertDialog alertDialog = builder.create();
                         alertDialog.show();
                     }
