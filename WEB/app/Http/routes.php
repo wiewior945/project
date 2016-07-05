@@ -18,9 +18,9 @@ Route::get('/', function () {
 Route::auth();
 Route::get('/home', 'HomeController@index');
 Route::auth();
-Route::post('/mobilelogin', 'HomeController@authoriseMobile');
 Route::get('/home', 'HomeController@index');
-Route::group(['middleware' => ['web']], function () {
+Route::get('/mobilelogin', "APIController@authoriseMobile");
+Route::group(['middleware' => ['web', 'auth:api']], function () {
     Route::get('/note', 'NoteController@showNote');
     Route::get('/mynotes', 'NoteController@showMyNotes');
     Route::get('/addnote', 'NoteController@addForm');

@@ -6,6 +6,7 @@ use App\Http\Requests;
 use Illuminate\Http\Request;
 use DB;
 use Auth;
+use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller
 {
@@ -16,7 +17,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => 'mobilelogin']);
     }
 
     /**
@@ -29,14 +30,6 @@ class HomeController extends Controller
         return view('home');
     }
 
-    public function authoriseMobile() {
-        $user = $_POST['username'];
-        $password = Hash::make($_POST['pasword']);
-
-        if(Auth::atempt(['email' => $user, 'password' => $password])) {
-            return true;
-        }
-    }
     function editUserForm() {
         $user = DB::table('users')
                     ->where('id', Auth::user()->id)
