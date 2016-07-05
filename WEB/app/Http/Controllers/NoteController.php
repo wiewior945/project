@@ -23,6 +23,11 @@ class NoteController extends Controller
                     'userID' => Auth::user()->id
                 ]
             ]);
+            DB::table('notegroup')
+                ->insert([[
+                    'noteId' => DB::getPdo()->lastInsertId(),
+                    'userId' => Auth::user()->id,
+                ]]);
         }
         return redirect()->intended('/mynotes');
     }

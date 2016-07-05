@@ -17,6 +17,7 @@ class GroupController extends Controller
                       ->distinct()
                       ->join('usergroup', 'groups.id', '=', 'usergroup.groupID')
                       ->where('usergroup.userID', Auth::user()->id)
+                      ->where('usergroup.groupID', "!=", Auth::user()->privateGroup)
                       ->get();
         return View('group.list')->with('groups', $groups);
     }
