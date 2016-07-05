@@ -4,9 +4,10 @@ mysqli_select_db($con, 'notesdb') or die('Could not select database');
 
 
 $id=$_POST['id'];
-$groupId=$_POST['groupId'];
-$sql = "UPDATE users SET privateGroup='$groupId' WHERE id='$id'";
+$result = mysqli_query($con, "SELECT email FROM users WHERE id='$id'") or die('Query failed: ' . mysqli_error());
 
-mysqli_query($con, $sql) or die(mysqli_error($con));
+$row = mysqli_fetch_array($result);
+$data = $row[0];
 
+echo $data;
 ?>

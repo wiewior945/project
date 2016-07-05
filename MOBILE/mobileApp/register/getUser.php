@@ -1,9 +1,9 @@
 <?php
 $con = mysqli_connect('localhost', 'root') or die('Could not connect: ' . mysql_error());
-mysqli_select_db($con, 'aplikacja') or die('Could not select database');
+mysqli_select_db($con, 'notesdb') or die('Could not select database');
 
-$username=$_POST['username'];
-$result = mysql_query($con, "SELECT Username,id FROM user WHERE Username='$username'") or die('Query failed: ' . mysql_error());
+$email=$_POST['username'];
+$result = mysql_query($con, "SELECT email,id FROM users WHERE email='$email'") or die('Query failed: ' . mysql_error());
 
 $row = mysqli_fetch_array($result);
 $data = $row[0];
