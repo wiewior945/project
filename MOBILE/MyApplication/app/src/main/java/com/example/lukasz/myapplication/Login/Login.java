@@ -63,11 +63,10 @@ public class Login extends Activity {
                             JSONObject c=tablica.getJSONObject(0);
                             String jsonID=c.getString("id");
                             int id = Integer.parseInt(jsonID);
-                            String name=c.getString("email");
                             String jsonGroupId=c.getString("privateGroup");
                             int privateGroupId=Integer.parseInt(jsonGroupId);
 
-                            User user = new User(name,id, privateGroupId);
+                            User user = new User(login ,id, privateGroupId);
                             Intent intent = new Intent(this,Desktop.class);
                             intent.putExtra("user",user);
                             startActivity(intent);

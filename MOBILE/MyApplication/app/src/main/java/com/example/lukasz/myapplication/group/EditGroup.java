@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 
 import com.example.lukasz.myapplication.R;
 import com.example.lukasz.myapplication.dataBase.DataBaseConnection;
@@ -26,10 +27,11 @@ import java.util.concurrent.ExecutionException;
  */
 public class EditGroup extends Activity {
 
-    private String userId, groupId;
+    private String userId, groupId, isPrivate;
     private EditText nameText, password1Text, password2Text;
     private CheckBox checkBox;
-    private Button saveButton;
+    private Button saveButton, deleteMember;
+    private TextView passText, pass2Text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +46,9 @@ public class EditGroup extends Activity {
         password2Text = (EditText) findViewById(R.id.groupPassword2);
         passwordTextEnabled(false);
         checkBox = (CheckBox) findViewById(R.id.publicGroupCheckBox);
-
+        deleteMember = (Button) findViewById(R.id.deleteGroupMemberButton);
+        passText = (TextView) findViewById(R.id.groupPasswordText);
+        pass2Text = (TextView) findViewById(R.id.groupPasswordText2);
         try {
             String jsonString = new DataBaseConnection().execute("mobileApp/group/getGroupById.php", "groupId",groupId).get();
             JSONObject jsonObject = new JSONObject(jsonString);
@@ -52,12 +56,21 @@ public class EditGroup extends Activity {
             JSONObject json = jsonArray.getJSONObject(0);
             nameText.setText(json.getString("name"));
             String isPublic = json.getString("isPublic");
+            isPrivate = json.getString("isPrivate");
             if (isPublic.equals("0")){
                 checkBox.setChecked(false);
                 passwordTextEnabled(true);
                 String password = json.getString("password");
                 password1Text.setText(password);
                 password2Text.setText(password);
+            }
+            if(isPrivate.equals("1")){
+                checkBox.setVisibility(View.GONE);
+                password1Text.setVisibility(View.GONE);
+                password2Text.setVisibility(View.GONE);
+                deleteMember.setVisibility(View.GONE);
+                pass2Text.setVisibility(View.GONE);
+                passText.setVisibility(View.GONE);
             }
         } catch (InterruptedException | JSONException | ExecutionException e) {
             e.printStackTrace();
@@ -91,7 +104,10 @@ public class EditGroup extends Activity {
 
     public void add(View view){
         String name = nameText.getText().toString();
-        if (checkBox.isChecked()) {
+        if(isPrivate.equals("1")){
+            update(name, "", "0");
+        }
+        else if (checkBox.isChecked()) {
             update(name, "", "1");
         }
         else{
