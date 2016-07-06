@@ -22,6 +22,9 @@ class GroupController extends Controller
         return View('group.list')->with('groups', $groups);
     }
     function createGroupForm() {
+        if(!Auth::check()) {
+            return redirect()->intended('login');
+        }
         return view('group.groupForm'); 
     }
     function createGroup() {
@@ -42,6 +45,9 @@ class GroupController extends Controller
         return redirect()->intended('mygroups');
     }
     function editGroupForm() {
+         if(!Auth::check()) {
+            return redirect()->intended('login');
+        }
          $group= DB::table('groups')->where('id', $_GET['groupID'])->get();
         return view('group.edit')->with('group', $group[0]);
     }
@@ -61,6 +67,9 @@ class GroupController extends Controller
         return redirect()->intended('/mygroups');
     }
     function groupNotes() {
+        if(!Auth::check()) {
+            return redirect()->intended('login');
+        }
         $groupNotes = DB::table('notegroup')
                         ->distinct()
                         ->join('notes', 'notegroup.noteId', '=', 'notes.id')
@@ -93,6 +102,9 @@ class GroupController extends Controller
         return redirect()->intended("/mygroups");
     }
     function addUserToGroupForm() {
+        if(!Auth::check()) {
+            return redirect()->intended('login');
+        }
         $groupID = $_GET['groupID'];
         return view("group.addUser")->with('groupID', $groupID);
     }
@@ -112,6 +124,9 @@ class GroupController extends Controller
         return redirect()->intended('mygroups');
     }
     function searchGroup() {
+        if(!Auth::check()) {
+            return redirect()->intended('login');
+        }
         if(!isset($_POST['query'])) {
             return view('group.search');
         } else {
@@ -123,6 +138,9 @@ class GroupController extends Controller
         }
     }
     function joinGroup() {
+        if(!Auth::check()) {
+            return redirect()->intended('login');
+        }
         if(isset($_GET['id'])) {
             $group = DB::table('groups')
                          ->where('id', $_GET['id'])
