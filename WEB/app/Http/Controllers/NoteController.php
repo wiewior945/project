@@ -11,6 +11,9 @@ use App\note;
 class NoteController extends Controller
 {
     function addForm() {
+        if(!Auth::check()) {
+            return redirect()->intended('login');
+        }
         return view('note.create');
     }
     function createNote() {
@@ -23,15 +26,21 @@ class NoteController extends Controller
                     'userID' => Auth::user()->id
                 ]
             ]);
+            $user = DB::table('users')
+                        ->where('id', Auth::user()->id)
+                        ->get();
             DB::table('notegroup')
                 ->insert([[
                     'noteId' => DB::getPdo()->lastInsertId(),
-                    'userId' => Auth::user()->id,
+                    'groupId' => $user[0]->privateGroup,
                 ]]);
         }
         return redirect()->intended('/mynotes');
     }
     function editForm() {
+        if(!Auth::check()) {
+            return redirect()->intended('login');
+        }
         $note = DB::table('notes')->where('id', $_GET['noteID'])->get();
         return view('note.edit')->with('note', $note[0]);
     }

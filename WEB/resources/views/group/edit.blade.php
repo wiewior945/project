@@ -3,7 +3,7 @@
     <div class="panel panel-success4 container">
         <div class="panel-heading">Edycja danych grupy</div>
         <div class="panel-body">
-            <form action="/editGroup" method="POST">
+            <form action="{{ url('/editGroup') }}" method="POST">
                 {{ csrf_field() }}
                 <input type="hidden" name="id" value="{{ $_GET['groupID'] }}"/>
                 <div class="form-group">

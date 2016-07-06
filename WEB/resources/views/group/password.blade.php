@@ -3,7 +3,7 @@
     <div class="panel panel-success4 container">
         <div class="panel-heading">Znajdź grupę!</div>
         <div class="panel-body">
-            <form action="/joinGroup" method="POST">
+            <form action="{{ url('/joinGroup') }}" method="POST">
                 {{ csrf_field() }}
                 <input type="hidden" value="{{ $groupID }}" name="id" />
                 <div class="form-group">

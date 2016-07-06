@@ -8,15 +8,15 @@
             <?php
                 foreach ($groupNotes as $key => $value) {
                     echo '<li>';
-                    echo '<a href="/note?noteID='. $value->noteId. '">'. $value->nazwa. '</a>';
+                    echo '<a href="'. url('/note'). '?noteID='. $value->noteId. '">'. $value->nazwa. '</a>';
                     echo '</li>'; 
                 }
             ?>
         </ul> 
         <div class="buttons">
-            <a href="/adduser?groupID={{ $_GET['groupID'] }}" class="btn btn-default" >Dodaj użytkownika do grupy</a>
-            <a href="/createGroupForm" class="btn btn-default">Utwórz nową grupę</a>
-            <a href="/editGroupForm?groupID={{ $_GET['groupID'] }}" class="btn btn-default">Edytuj dane grupy</a>
+            <a href="{{ url('/adduser') }}?groupID={{ $_GET['groupID'] }}" class="btn btn-default" >Dodaj użytkownika do grupy</a>
+            <a href="{{ url('/createGroupForm') }}" class="btn btn-default">Utwórz nową grupę</a>
+            <a href="{{ url('/editGroupForm') }}?groupID={{ $_GET['groupID'] }}" class="btn btn-default">Edytuj dane grupy</a>
         </div>
     </div>
 @endsection

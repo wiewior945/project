@@ -3,7 +3,7 @@
     <div class="panel panel-success4 container">
         <div class="panel-heading">Utwórz nową grupę!</div>
         <div class="panel-body">
-            <form action="/addUserToGroup" method="POST" role="form">
+            <form action="{{ url('/addUserToGroup') }}" method="POST" role="form">
                 {{ csrf_field() }}
                 <input name="groupID" type="hidden" value="{{ $groupID }}" />
                 <div class="form-group">
