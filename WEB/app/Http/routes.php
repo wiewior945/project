@@ -20,7 +20,7 @@ Route::get('/home', 'HomeController@index');
 Route::auth();
 Route::get('/home', 'HomeController@index');
 Route::get('/mobilelogin', "APIController@authoriseMobile");
-Route::group(['middleware' => ['web', 'auth:api']], function () {
+Route::group(['middleware' => 'web'], function () {
     Route::get('/note', 'NoteController@showNote');
     Route::get('/mynotes', 'NoteController@showMyNotes');
     Route::get('/addnote', 'NoteController@addForm');

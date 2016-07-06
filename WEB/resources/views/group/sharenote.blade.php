@@ -3,7 +3,7 @@
     <div class="panel panel-success4 container">
         <div class="panel-heading">Udostępnij notatkę w grupie!</div>
         <div class="panel-body">
-            <form action="/sharenote" method="POST">
+            <form action="{{ url('/sharenote') }}" method="POST">
                 {{ csrf_field() }}
                 <input name="noteID" type="hidden" value="{{ $noteID }}" />
                 <div class="form-group">

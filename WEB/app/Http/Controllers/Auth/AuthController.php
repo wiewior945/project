@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use Validator;
+use DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
@@ -63,10 +64,29 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => $data['password'],
+            'password' => bcrypt($data['password']),
+            'mobile_pass' => $data['password'],
         ]);
+        $userID = DB::getPdo()->lastInsertId();
+        DB::table('groups')
+            ->insert([[
+                'name' => "PrivateGroup_".$data["name"],
+                'adminID' => $userID,
+                'isPublic' => false,
+                'password' => "",
+            ]]);
+        $groupID = DB::getPdo()->lastInsertId();
+        DB::table("users")
+            ->where('id', $userID)
+            ->update(array("privateGroup" => $groupID));
+        DB::table('userGroup')
+            ->insert([[
+                'userID' => $userID,
+                'groupID' => $groupID
+            ]]);
+        return $user;
     }
 }

@@ -18,7 +18,7 @@
                     } else {
                         echo "<ul>";
                         foreach($groups as $key => $value) {
-                            echo "<li><a href=\"/joinGroup?id=".$value->id."\" >".$value->name."</a></li>";
+                            echo "<li><a href=\"". url('/joinGroup'). "?id=".$value->id."\" >".$value->name."</a></li>";
                         }
                         echo "</ul>";
                     }

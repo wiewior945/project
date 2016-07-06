@@ -8,14 +8,14 @@
             <?php
                 foreach ($groups as $key => $value) {
                     echo '<li>';
-                    echo '<a href="/group?groupID='. $value->id. '">'. $value->name. '</a>';
+                    echo '<a href="'. url('/group'). '?groupID='. $value->id. '">'. $value->name. '</a>';
                     echo '</li>'; 
                 }
             ?>
         </ul>
         <div class="buttons">
-            <a href="/createGroupForm" class="btn btn-default">Utwórz grupę</a>
-            <a href="/searchGroup" class="btn btn-default">Szukaj grupy</a>
+            <a href="{{ url('/createGroupForm') }}" class="btn btn-default">Utwórz grupę</a>
+            <a href="{{ url('/searchGroup') }}" class="btn btn-default">Szukaj grupy</a>
         </div>
     </div>
 @endsection

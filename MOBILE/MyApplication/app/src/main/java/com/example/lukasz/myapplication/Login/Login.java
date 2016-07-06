@@ -53,7 +53,8 @@ public class Login extends Activity {
             if(!login.equals("")){
                 String password=passwordText.getText().toString();
                 if(!password.equals("")){
-                    if(new DataBaseConnection().execute("mobileApp/login/username.php", "email", login).get().equals(login)){
+                    String ab =new DataBaseConnection().execute("mobileApp/login/username.php", "email", login).get();
+                    if(ab.equals(login)){
                         if(new DataBaseConnection().execute("mobileApp/login/password.php", "password", password).get().equals(password)){
                             DataBaseConnection a=new DataBaseConnection();
                             String b=a.execute("mobileApp/login/getUser.php", "email", login).get();

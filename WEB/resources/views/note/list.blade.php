@@ -7,7 +7,7 @@
         <?php
             foreach ($notes as $key => $value) {
                 echo '<li>';
-                echo '<a href="note?noteID='. $value->id. '">'. $value->nazwa. '</a>';
+                echo '<a href="'. url('/note'). '?noteID='. $value->id. '">'. $value->nazwa. '</a>';
                 echo '</li>'; 
             }
         ?>

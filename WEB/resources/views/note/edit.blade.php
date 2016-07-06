@@ -5,7 +5,7 @@
     {!! csrf_field() !!}
     <input type="text" name="id" value="{{ $note->id }}" hidden />
     <textarea type="text" name="nazwa" class="nazwa" required>{{ $note->nazwa }}</textarea>
-    <textarea id="Content" class="Contents" name="Contents" required>{{ $note->Contents }}</textarea>
+    <textarea id="Content" class="Contents" name="Contents" >{{ $note->Contents }}</textarea>
     <div class="buttons">
         <input type="submit" value="Zapisz" class="btn btn-default" />
     </div>
@@ -16,12 +16,6 @@
         plugins: 'code',
         toolbar: 'undo redo bold italic alignleft aligncenter alignright numlist',
         menubar: false,
-        setup: function (ed) {
-            ed.on('keyup', function (e) {
-                var count = CountCharactersPL();
-                document.getElementById("plCount").innerHTML = count;
-            });
-        }
     });
 </script>
 @endsection
