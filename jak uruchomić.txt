@@ -1,0 +1,16 @@
+Projekt by³ tworzony w oparciu o serwer xampp i bazê danych mysql
+
+1. Import bazy danych
+- utworzyæ bazê danych nazywaj¹c¹ siê notesdb
+- zaimportowaæ do utworzonej bazy plik sql z katalogu project/database/notesdb.sql
+
+2. Aplikacja mobilna
+- zaimportowaæ projekt z katalogu project/MOBILE/MyApplication
+- otworzyæ klasê DataBaseConection
+- na pocz¹tku klasy zmieniæ prywatne pole serverAdres na adres ip swojego komputera lub routera
+- skopiowaæ ca³y folder mobileApp z katalogu project/MOBILE/mobileApp i wkleiæ go do katalogu xampp: xampp/htdocs/
+- aplikacja jest gotowa do uruchomienia
+
+3. Aplikacja Web
+- skopiowaæ ca³y folder WEB z katalogu project/WEB do katalogu xampp: xampp/htdocs/project/
+- aplikacja uruchamia siê pod adresem: ipSerwera/WEB/public
