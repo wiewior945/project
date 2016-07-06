@@ -17,11 +17,7 @@ import java.net.URLEncoder;
  */
 public class DataBaseConnection extends AsyncTask<String,Void,String> {
 
-<<<<<<< HEAD
     private String serverAdres = "http://172.16.22.76:80/";
-=======
-    private String serverAdres = "http://192.168.0.2:80/";
->>>>>>> 0dd1f8e4f4c89d09d56b6c342deb9f02fcc42d1c
 
     @Override
     protected String doInBackground(String... params) {
