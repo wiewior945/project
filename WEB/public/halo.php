@@ -3,7 +3,7 @@
 $user = $_GET['username'];
 $password = $_GET['password'];
 $url = '192.168.1.7:80/project/WEB/public/mobilelogin?username='.$user."&password".$password;
-$data = array('username' => 'gleks@pwc.com', 'password' => 'test123');
+$data = array('username' => 'jakis@mail.com', 'password' => 'test123');
 
 $options = array(
     'http' => array(
